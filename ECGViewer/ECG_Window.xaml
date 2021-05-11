@@ -13,19 +13,25 @@
         </Grid.ColumnDefinitions>
         <Rectangle Margin="0,47,0,0" Fill="#FFD7EBF5" Height="120" VerticalAlignment="Top" HorizontalAlignment="Center" Width="1806"/>
 
-        <lvc:CartesianChart x:Name="ChartBS" Grid.Row="0" Margin="10,175,10,10" LegendLocation="Top" Background="White" FontSize="30">
+        <lvc:CartesianChart x:Name="ChartECG" Grid.Row="0" Margin="10,175,10,10" LegendLocation="Top" Background="White" FontSize="30">
             <lvc:CartesianChart.Series>
-                <lvc:LineSeries x:Name="Bloodsugar_" Title="EKG-måling" Fill="Transparent" Values="{Binding ecgCollection}"/>
+                <lvc:LineSeries x:Name="Bloodsugar_" Title="EKG-måling" Fill="Transparent" Values="{Binding ecgCollection}" LineSmoothness="0"/>
             </lvc:CartesianChart.Series>
             <lvc:CartesianChart.AxisX>
-                <lvc:Axis Title="Tid [mS]" FontSize="30" LabelsRotation="-45">
+                <lvc:Axis Title="Tid [20 mS]" FontSize="30" LabelsRotation="-45" MaxValue="10">
                     <lvc:Axis.Separator>
-                        <lvc:Separator IsEnabled="True" Step="1"/>
+                        <lvc:Separator IsEnabled="True" Step="1" Stroke="#FF6C6969" />
+                    </lvc:Axis.Separator>
+                </lvc:Axis>
+                <lvc:Axis MaxValue="500">
+                    <lvc:Axis.Separator>
+                        <lvc:Separator IsEnabled="True" Step="1" Stroke="#FFB4B4B4" />
                     </lvc:Axis.Separator>
                 </lvc:Axis>
             </lvc:CartesianChart.AxisX>
             <lvc:CartesianChart.AxisY>
-                <lvc:Axis Title="Spænding [mV]" FontSize="30" MinValue="0" MaxValue="18" MinRange="1" />
+                <lvc:Axis Title="Spænding [mV]" FontSize="30" MinValue="-0.5" MaxValue="1.5" Foreground="Red"/>
+                <lvc:Axis MinValue="-5" MaxValue="15" MinRange="1" Foreground="White" FontSize="0"/>
             </lvc:CartesianChart.AxisY>
         </lvc:CartesianChart>
         <Label Content="CPR:" HorizontalAlignment="Left" Margin="72,72,0,0" VerticalAlignment="Top" FontWeight="Bold" Height="104" Width="114" FontSize="40"/>

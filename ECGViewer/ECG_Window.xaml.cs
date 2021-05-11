@@ -27,35 +27,53 @@ namespace Presentation_Layer
     {
         Logic logicRef;
         String SocSecNb;
-        private const String db = "F21ST2ITS2au675718";
-        private int id = 0;
-        public ChartValues<Double> Yvalues { get; set; }
-        public ChartValues<Double> Xvalues { get; set; }
+        string måleID;
+        public ChartValues<double> ecgCollection { get; set; }
+        public ChartValues<double> Xvalues { get; set; }
 
-        public ECG_Window(Logic logicRef, String SocSecNb)
+        public ECG_Window(Logic logicRef, String SocSecNb, string måleID)
         {
             InitializeComponent();
-
             this.logicRef = logicRef;
             this.SocSecNb = SocSecNb;
-
-
+            this.måleID = måleID;
+            DataContext = this;
+            ecgCollection = new ChartValues<double>();
+            Xvalues = new ChartValues<double>();
         }
         private SqlConnection connect
         {
             get
             {
-                SqlConnection conn;
-                conn = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=F21ST2ITS2au675718;User ID=F21ST2ITS2au675718;Password=" + db + ";Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
-                conn.Open();
-                return conn;
+                var con = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=ST2PRJ2OffEKGDatabase;Integrated Security=False;User ID=ST2PRJ2OffEKGDatabase;Password=ST2PRJ2OffEKGDatabase;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
+                con.Open();
+                return con;
             }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            ecgCollection.Clear();
             cpr_Lb.Content = SocSecNb;
+            SqlDataReader rdr;
+            byte[] bytesArr = new byte[8];
+            double[] tal;
+            string selectString = "Select raa_data From EKGDATA  where ekgmaaleid = " + måleID;
+            using (SqlCommand cmd = new SqlCommand(selectString, connect))
+            {
+                rdr = cmd.ExecuteReader();
+                if (rdr.Read())
+                    bytesArr = (byte[])rdr["raa_data"];
+                tal = new double[bytesArr.Length / 8];
 
+                for (int i = 0, j = 0; i < bytesArr.Length; i += 8, j++)
+                    tal[j] = BitConverter.ToDouble(bytesArr, i);
+            }
+            connect.Close();
+            for (int i = 0; i < tal.Length; i++)
+            {
+                ecgCollection.Add(tal[i]);
+            }
             // listerne til x og y værdieren fyldes med data:
 
             //foreach (var dTO_BSugar in logicRef.getBSugarData(SocSecNb))
