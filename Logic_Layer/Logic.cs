@@ -28,6 +28,15 @@ namespace Logic_Layer
             }
             return id;
         }
+        public List<DTO_ECG> ECGData(string måleID)
+        {
+            List<DTO_ECG> ecg = new List<DTO_ECG>();
+            foreach (var item in dataObject.getECGData(måleID))
+            {
+                ecg.Add(item);
+            }
+            return ecg;
+        }
 
     }
 }

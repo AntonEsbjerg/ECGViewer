@@ -55,11 +55,9 @@ namespace Presentation_Layer
         {
             ecgCollection.Clear();
             cpr_Lb.Content = SocSecNb;
-            
-            connect.Close();
-            for (int i = 0; i < tal.Length; i++)
+            foreach (var item in logicRef.ECGData(måleID))
             {
-                ecgCollection.Add(tal[i]);
+                ecgCollection.Add(Convert.ToDouble(item));
             }
             // listerne til x og y værdieren fyldes med data:
 

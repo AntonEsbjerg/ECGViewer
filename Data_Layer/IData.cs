@@ -9,7 +9,7 @@ namespace Data_Layer
     {
         bool isUserRegistered(String socSecNb, String pw);
 
-        //public List<DTO_ECG> getECGdata(String socsecNb);
+        List<DTO_ECG> getECGData(String måleID);
         List<DTO_id> fillComboBox();
     }
 }

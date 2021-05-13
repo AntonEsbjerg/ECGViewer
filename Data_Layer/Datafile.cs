@@ -72,7 +72,7 @@ namespace Data_Layer
             connect.Close();
             return tempsocsecNB;
         }
-        public List<DTO_ECG> loadECG(String måleID)
+        public List<DTO_ECG> getECGData(String måleID)
         {
             List<DTO_ECG> ecg = new List<DTO_ECG>();
             SqlDataReader rdr;
@@ -89,26 +89,12 @@ namespace Data_Layer
                 for (int i = 0, j = 0; i < bytesArr.Length; i += 8, j++)
                     tal[j] = BitConverter.ToDouble(bytesArr, i);
             }
+            connect.Close();
             for (int i = 0; i < tal.Length; i++)
             {
                 ecg.Add(new DTO_ECG(tal[i]));
             }
-            connect.Close();
+            return ecg;
         }
-
     }
-   
-
-    //public List<DTO_ECG> getECGdata(String socsecNb)
-    //{
-    //   List<DTO_ECG> ecglist = new List<DTO_ECG>();
-
-    //   foreach (var ECG in collection)
-    //   {
-    //      ecglist.add(ECG);
-    //   }
-
-    //   return ecglist;
-
-    //}
 }
