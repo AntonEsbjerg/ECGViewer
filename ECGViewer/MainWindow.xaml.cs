@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.ComponentModel;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using Logic_Layer;
 
@@ -27,12 +28,27 @@ namespace Presentation_Layer
         private Logic logicObj;
         private ECG_Window ecgw;
         private string socsecNB;
+        private String måleID;
+        private List<String> tempsocsecNB;
+       
         public MainWindow()
         {
             logicObj = new Logic();
             loginW = new LoginWindow(this, logicObj);
+            tempsocsecNB = new List<string>();
             InitializeComponent();
             this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
+        }
+        private SqlConnection connect
+        {
+            get
+            {
+                var con = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=ST2PRJ2OffEKGDatabase;Integrated Security=False;User ID=ST2PRJ2OffEKGDatabase;Password=ST2PRJ2OffEKGDatabase;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
+
+                con.Open();
+
+                return con;
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -42,7 +58,7 @@ namespace Presentation_Layer
             loginW.ShowDialog();
 
             cpr_CB.Text = "Find CPR";
-
+            
 
             if (LoginOK == true)
             {
@@ -53,9 +69,24 @@ namespace Presentation_Layer
             {
                 this.Close();
             }
-
+            SqlDataReader rdr;
+            string insertStringParam = ("Select borger_cprnr,ekgmaaleid from EKGMAELING where borger_cprnr IS NOT NULL");
+            using (SqlCommand cmd = new SqlCommand(insertStringParam, connect))
+            {
+                rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    socsecNB = Convert.ToString(rdr["borger_cprnr"]);
+                    måleID = Convert.ToString(rdr["ekgmaaleid"]);
+                    tempsocsecNB.Add(socsecNB + " måling nr: " + måleID);
+                }
+            }
+            connect.Close();
+            foreach (var item in tempsocsecNB)
+            {
+                cpr_CB.Items.Add(item);
+            } 
         }
-
         private void HandleEsc(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
@@ -105,7 +136,7 @@ namespace Presentation_Layer
         private void newECG_Button_Click(object sender, RoutedEventArgs e)
         {
             Blinkingbutton(newECG_Button, 500, 3.0);
-            ecgw = new ECG_Window(logicObj, socsecNB);
+            ecgw = new ECG_Window(logicObj, socsecNB, måleID);
             this.Hide();
             ecgw.ShowDialog();
             this.Show();
@@ -117,37 +148,16 @@ namespace Presentation_Layer
         }
         private void valgtEKG_BT_Click(object sender, RoutedEventArgs e)
         {
-            ecgw = new ECG_Window(logicObj, socsecNB);
+            int found = 0;
+            found = cpr_CB.Text.IndexOf(" måling nr: ");
+            string måleid= cpr_CB.Text.Substring(found + 12);
+            string cpr= cpr_CB.Text.Substring(0,found);
+            socsecNB = cpr_CB.Text;
+            ecgw = new ECG_Window(logicObj, cpr, måleid);
             this.Hide();
             ecgw.ShowDialog();
-            this.Show();
+            this.Show();         
         }
-        //private SqlConnection connect
-        //{
-        //    get
-        //    {
-        //        SqlConnection conn;
-        //        conn = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=F21ST2ITS2au675718;User ID=F21ST2ITS2au675718;Password=" + db + ";Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
-        //        conn.Open();
-        //        return conn;
-        //    }
-        //}
-
-        //private void cpr_CB_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    double[] tal;
-        //    SqlDataReader rdr;
-        //    byte[] bytesArr = new byte[8];
-        //    string selectString = "Select ekgmaaleid from EKGMAELING where borger_cprnr = " + cpr_CB.Text;
-        //    using (SqlCommand cmd = new SqlCommand(selectString, connect))
-        //    {
-        //        rdr = cmd.ExecuteReader();
-        //        if (rdr.Read())
-        //            socsecNB = cpr_CB.Text;
-
-        //    }
-        //    connect.Close();
-        //}
     }
 }
 
