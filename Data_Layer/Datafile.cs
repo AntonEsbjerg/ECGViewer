@@ -8,38 +8,35 @@ using DTO;
 
 namespace Data_Layer
 {
-    public class Datafile : IData
-    {
-        private FileStream input;
-        private StreamReader reader;
-        public Datafile() { }
+   public class Datafile : IData
+   {
+    
+      DataDB dbref;
+      public Datafile() 
+      {
+         dbref = new DataDB();
+      
+      }
 
 
-        public bool isUserRegistered(String username, String pw)
-        {
-            bool result = false;
+      public bool isUserRegistered(String username, String pw)
+      {
+         if (dbref.isUserRegistered(username, pw) == true)
+         {
+            return
+               true;
+         }
+         else
+            return
+               false;
 
-            input = new FileStream("Registered Users.txt", FileMode.Open, FileAccess.Read);
-            reader = new StreamReader(input);
+  
 
-            string inputRecord;
-            string[] inputFields;
+      }
 
-            while ((inputRecord = reader.ReadLine()) != null)
-            {
-                inputFields = inputRecord.Split(';');
+      
 
-                if (inputFields[0] == username && inputFields[1] == pw)
-                {
-                    result = true;
-                    break;
-                }
-            }
-
-            reader.Close();
-
-            return result;
-        }
+        
     }
 
     //public List<DTO_ECG> getECGdata(String socsecNb)
