@@ -19,5 +19,15 @@ namespace Logic_Layer
             else
                 return false;
         }
+        public List<DTO_id> ID()
+        {
+            List<DTO_id> id = new List<DTO_id>();
+            foreach (var item in dataObject.fillComboBox())
+            {
+                id.Add(item);
+            }
+            return id;
+        }
+
     }
 }

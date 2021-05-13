@@ -55,20 +55,7 @@ namespace Presentation_Layer
         {
             ecgCollection.Clear();
             cpr_Lb.Content = SocSecNb;
-            SqlDataReader rdr;
-            byte[] bytesArr = new byte[8];
-            double[] tal;
-            string selectString = "Select raa_data From EKGDATA  where ekgmaaleid = " + måleID;
-            using (SqlCommand cmd = new SqlCommand(selectString, connect))
-            {
-                rdr = cmd.ExecuteReader();
-                if (rdr.Read())
-                    bytesArr = (byte[])rdr["raa_data"];
-                tal = new double[bytesArr.Length / 8];
-
-                for (int i = 0, j = 0; i < bytesArr.Length; i += 8, j++)
-                    tal[j] = BitConverter.ToDouble(bytesArr, i);
-            }
+            
             connect.Close();
             for (int i = 0; i < tal.Length; i++)
             {
