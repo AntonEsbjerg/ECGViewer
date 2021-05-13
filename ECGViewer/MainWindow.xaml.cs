@@ -33,7 +33,6 @@ namespace Presentation_Layer
        
         public MainWindow()
         {
-            logicObj = new Logic();
             loginW = new LoginWindow(this, logicObj);
             tempsocsecNB = new List<string>();
             InitializeComponent();
@@ -53,6 +52,7 @@ namespace Presentation_Layer
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            logicObj = new Logic();
             this.Hide();
 
             loginW.ShowDialog();
@@ -69,23 +69,11 @@ namespace Presentation_Layer
             {
                 this.Close();
             }
-            SqlDataReader rdr;
-            string insertStringParam = ("Select borger_cprnr,ekgmaaleid from EKGMAELING where borger_cprnr IS NOT NULL");
-            using (SqlCommand cmd = new SqlCommand(insertStringParam, connect))
+
+            foreach (var item in logicObj.ID())
             {
-                rdr = cmd.ExecuteReader();
-                while (rdr.Read())
-                {
-                    socsecNB = Convert.ToString(rdr["borger_cprnr"]);
-                    måleID = Convert.ToString(rdr["ekgmaaleid"]);
-                    tempsocsecNB.Add(socsecNB + " måling nr: " + måleID);
-                }
+                cpr_CB.Items.Add(item.borgerCPR + " måling nr: " + item.måleID);
             }
-            connect.Close();
-            foreach (var item in tempsocsecNB)
-            {
-                cpr_CB.Items.Add(item);
-            } 
         }
         private void HandleEsc(object sender, KeyEventArgs e)
         {
