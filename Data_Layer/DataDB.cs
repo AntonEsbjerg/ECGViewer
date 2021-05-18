@@ -29,47 +29,17 @@ namespace Data_Layer
         public bool isUserRegistered(String username, String pw)
         {
             bool result;
-
-            SqlDataReader rdr, rdr2;
-            string selectString = "select * from gyldigelogin where Brugernavn= '" + username + "'";
-            string selectString2 = "select * from gyldigelogin where Adgangskode= '" + pw + "'";
-
-            using (SqlCommand cmd = new SqlCommand(selectString, OpenConnectionST))
-            {
-                rdr = cmd.ExecuteReader();
-            }
-            if (rdr.Read())
-            {
-                using (SqlCommand cmd = new SqlCommand(selectString2, OpenConnectionST))
-                {
-                    rdr2 = cmd.ExecuteReader();
-                }
-
-                if (rdr2.Read())
-                {
-                    result = true;
-                }
-                else
-                {
-                    result = false;
-                }
+         SqlDataReader rdr;
+         string selectString = "select * from gyldigelogin where Brugernavn= '" + username + "'and Adgangskode= '" + pw + "'";
 
 
-            }
-            else
-                result = false;
-
-            return
-               result;
-        }
-        private SqlConnection connect
-        {
-            get
-            {
-                var con = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=ST2PRJ2OffEKGDatabase;Integrated Security=False;User ID=ST2PRJ2OffEKGDatabase;Password=ST2PRJ2OffEKGDatabase;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
-
-                con.Open();
-
+         using (SqlCommand cmd = new SqlCommand(selectString, OpenConnectionST))
+         {
+            rdr = cmd.ExecuteReader();
+         }
+         if (rdr.Read())
+         {
+               result = true;
                 return con;
             }
         }
