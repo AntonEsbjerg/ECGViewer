@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="DTO_ECG.cs" />
     <Compile Include="DTO_id.cs" />
+    <Compile Include="DTO_lokalinfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,7 @@ using Data_Layer;
 using DTO;
 using System.Collections.Generic;
 
+
 namespace Logic_Layer
 {
     public class Logic
@@ -10,7 +11,7 @@ namespace Logic_Layer
         private IData dataObject;
         public Logic()
         {
-            dataObject = new Datafile();
+            dataObject = new DataDB();
         }
         public bool checkLogin(String username, String pw)
         {
@@ -37,6 +38,14 @@ namespace Logic_Layer
             }
             return ecg;
         }
-
+        public List<DTO_lokalinfo> GetDTO_Lokalinfo()
+        {
+            List<DTO_lokalinfo> info = new List<DTO_lokalinfo>();
+            foreach (var item in dataObject.downloadLokalinfo())
+            {
+                info.Add(item);
+            }
+            return info;
+        }
     }
 }

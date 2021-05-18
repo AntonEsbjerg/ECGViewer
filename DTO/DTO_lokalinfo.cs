@@ -1,0 +1,42 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DTO
+{
+    public class DTO_lokalinfo
+    {
+        public DateTime _dato { get; set; }
+        public int _ekgmaaleid { get; set; }
+        public int _antalmaalinger { get; set; }
+        public String _sfp_maaltagerfornavn { get; set; }
+        public String _sfp_maaltagerefternavn { get; set; }
+        public String _sfp_maaltagermedarbjdnr { get; set; }
+        public String _sfp_mt_kommentar { get; set; }
+        public String _sfp_mt_org { get; set; }
+        public String _borger_fornavn { get; set; }
+        public String _borger_efternavn { get; set; }
+        public String _borger_cprnr { get; set; }
+        public bool _STEMI_suspected { get; set; }
+
+        public DTO_lokalinfo(bool stemi_suspected, DateTime dato, int ekgmaaleid, int antalmaalinger, string sfp_maaltagerfornavn,
+           string sfp_maaltagerefternavn, string sfp_maaltagermedarbjdnr, string sfp_mt_kommentar, string sfp_mt_org, string borger_fornavn
+            , string borger_efternavn, string borger_cprnr)
+        {
+            _STEMI_suspected = stemi_suspected;
+            _dato = dato;
+            _ekgmaaleid = ekgmaaleid;
+            _antalmaalinger = antalmaalinger;
+            _sfp_maaltagerfornavn = sfp_maaltagerfornavn;
+            _sfp_maaltagerefternavn = sfp_maaltagerefternavn;
+            _sfp_maaltagermedarbjdnr = sfp_maaltagermedarbjdnr;
+            _sfp_mt_kommentar = sfp_mt_kommentar;
+            _sfp_mt_org = sfp_mt_org;
+            _borger_fornavn = borger_fornavn;
+            _borger_efternavn = borger_efternavn;
+            _borger_cprnr = borger_cprnr;
+        }
+    }
+}

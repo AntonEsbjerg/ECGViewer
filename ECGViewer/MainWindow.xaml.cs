@@ -38,17 +38,6 @@ namespace Presentation_Layer
             InitializeComponent();
             this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
         }
-        private SqlConnection connect
-        {
-            get
-            {
-                var con = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=ST2PRJ2OffEKGDatabase;Integrated Security=False;User ID=ST2PRJ2OffEKGDatabase;Password=ST2PRJ2OffEKGDatabase;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
-
-                con.Open();
-
-                return con;
-            }
-        }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -72,7 +61,7 @@ namespace Presentation_Layer
 
             foreach (var item in logicObj.ID())
             {
-                cpr_CB.Items.Add(item.borgerCPR + " måling nr: " + item.måleID);
+                cpr_CB.Items.Add(item.måleID + " måling nr: " + item.borgerCPR);
             }
         }
         private void HandleEsc(object sender, KeyEventArgs e)
