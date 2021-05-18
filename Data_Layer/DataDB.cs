@@ -29,9 +29,9 @@ namespace Data_Layer
       {
          bool result;
 
-         SqlDataReader rdr, rdr2;
-         string selectString = "select * from gyldigelogin where Brugernavn= '" + username + "'";
-         string selectString2 = "select * from gyldigelogin where Adgangskode= '" + pw + "'";
+         SqlDataReader rdr;
+         string selectString = "select * from gyldigelogin where Brugernavn= '" + username + "'and Adgangskode= '" + pw + "'";
+
 
          using (SqlCommand cmd = new SqlCommand(selectString, OpenConnectionST))
          {
@@ -39,20 +39,7 @@ namespace Data_Layer
          }
          if (rdr.Read())
          {
-            using (SqlCommand cmd = new SqlCommand(selectString2, OpenConnectionST))
-            {
-               rdr2 = cmd.ExecuteReader();
-            }
-
-            if (rdr2.Read())
-            {
                result = true;
-            }
-            else
-            {
-               result = false;
-            }
-
 
          }
          else
