@@ -13,6 +13,7 @@ namespace Logic_Layer
         {
             dataObject = new DataDB();
         }
+        
         public bool checkLogin(String username, String pw)
         {
             if (dataObject.isUserRegistered(username, pw) == true)
@@ -38,14 +39,14 @@ namespace Logic_Layer
             }
             return ecg;
         }
-        public List<DTO_lokalinfo> GetDTO_Lokalinfo()
+        public DTO_lokalinfo GetLokalinfo()
         {
-            List<DTO_lokalinfo> info = new List<DTO_lokalinfo>();
-            foreach (var item in dataObject.downloadLokalinfo())
-            {
-                info.Add(item);
-            }
+            DTO_lokalinfo info = dataObject.downloadLokalinfo();
             return info;
+        }
+        public void uploadToDOEDB(DTO_lokalinfo nySTEMI)
+        {
+            dataObject.uploadToDOEDB(nySTEMI);
         }
     }
 }

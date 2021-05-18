@@ -81,7 +81,7 @@ namespace Presentation_Layer
 
             if (result == MessageBoxResult.Yes)
             {
-
+                logicRef.uploadToDOEDB(logicRef.GetLokalinfo());
             }
         }
 

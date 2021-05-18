@@ -11,6 +11,7 @@ namespace Data_Layer
 
         List<DTO_ECG> getECGData(String måleID);
         List<DTO_id> fillComboBox();
-        List<DTO_lokalinfo> downloadLokalinfo();
+        DTO_lokalinfo downloadLokalinfo();
+        void uploadToDOEDB(DTO_lokalinfo nySTEMI);
     }
 }
