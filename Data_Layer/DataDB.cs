@@ -129,7 +129,7 @@ namespace Data_Layer
                     }
                 }
                 OpenConnectionST.Close();
-                return lokalinfo=new DTO_lokalinfo(true,Convert.ToDateTime("00/00/0000"),0,0,"0","0","0","0","0","0","0","0",0,lokalECG,0,0,0,"0","0","0",Convert.ToDateTime(""),"0","0");
+                return lokalinfo=new DTO_lokalinfo(true,Convert.ToDateTime("00/00/0000"),0,0,"0","0","0","0","0","0","0","0",0,lokalECG,0,0,0,"0","0","0",Convert.ToDateTime("20/12/20"),"0","0");
             }
             
         }
@@ -184,13 +184,12 @@ namespace Data_Layer
             double[] ecgVoltage=new double[500];
             string insertStringParam = "INSERT INTO EKGDATA (raa_data,samplerate_hz,interval_sec,interval_min,data_format," +
                 "bin_eller_tekst,maaleformat_type,start_tid,kommentar,ekgmaaleid,maalenehed_identifikation) " +
-                "VALUES (@raa_data, @samplerate_hz, @interval_sec, @interval_min, @data_format, @bin_eller_tekst, @maaleformat_type,@start_tid" +
-                "@kommentar,@ekgmaaleid,@maalenehed_identifikation)";
-            string insertStringParam1= "INSERT INTO EKGMAELING (dato,antalmaalinger,sfp_maaltagerfornavn,sfp_maltagerefternavn,sfp_maaltagermedarbjnr," +
-                "sfp_mt_org,sfp_mt_kommentar,sfp_ansvfornavn,sfp_ansvefternavn,sfp_ansvrmedarbjnr,sfp_ans_org," +
-                "sfp_anskommentar,borger_fornavn,borger_efternavn,borger_beskrivelse,borger_cprnr) " +
-                "VALUES (@dato,@antalmaalinger,@sfp_maaltagerfornavn, @sfp_maltagerefternavn,@sfp_maaltagermedarbjnr,@sfp_mt_org,@sfp_mt_kommentar,@sfp_ansvfornavn" +
-                "@sfp_ansvefternavn,@sfp_ans_org,@sfp_anskommentar,@borger_fornavn,@borger_efternavn,@borger_beskrivelse,@borger_cprnr)";
+                "VALUES (@raa_data, @samplerate_hz, @interval_sec, @interval_min, @data_format, @bin_eller_tekst, " +
+                "@maaleformat_type,@start_tid,@kommentar,@ekgmaaleid,@maalenehed_identifikation)";
+            string insertStringParam1= "INSERT INTO EKGMAELING (dato,antalmaalinger,sfp_maaltagerfornavn,sfp_maltagerefternavn," +
+                "sfp_maaltagermedarbjnr,sfp_mt_org,sfp_mt_kommentar,borger_fornavn,borger_efternavn,borger_cprnr) " +
+                "VALUES (@dato,@antalmaalinger,@sfp_maaltagerfornavn, @sfp_maltagerefternavn,@sfp_maaltagermedarbjnr," +
+                "@sfp_mt_org,@sfp_mt_kommentar,@borger_fornavn,@borger_efternavn,@borger_cprnr)";
             using (SqlCommand command = new SqlCommand(insertStringParam, OpenConnectionST))
             {
                 tal=nySTEMI._lokalECG.ToArray();
@@ -209,11 +208,11 @@ namespace Data_Layer
                 command.Parameters.AddWithValue("@kommentar", nySTEMI._kommentar);
                 command.Parameters.AddWithValue("@ekgmaaleid", nySTEMI._ekgmaaleid);
                 command.Parameters.AddWithValue("@maalenehed_identifikation", nySTEMI._maaleenhed_identifikation);
-                OpenConnectionST.Close();
+                command.ExecuteNonQuery();
             }
             using (SqlCommand command = new SqlCommand(insertStringParam1, OpenConnectionST))
             {
-                command.Parameters.AddWithValue("@dato", nySTEMI._dato); ;
+                command.Parameters.AddWithValue("@dato", nySTEMI._dato);
                 command.Parameters.AddWithValue("@antalmaalinger", nySTEMI._antalmaalinger);
                 command.Parameters.AddWithValue("@sfp_maaltagerfornavn", nySTEMI._sfp_maaltagerfornavn);
                 command.Parameters.AddWithValue("@sfp_maltagerefternavn", nySTEMI._sfp_maaltagerefternavn);
@@ -223,6 +222,7 @@ namespace Data_Layer
                 command.Parameters.AddWithValue("@borger_fornavn", nySTEMI._borger_fornavn);
                 command.Parameters.AddWithValue("@borger_efternavn", nySTEMI._borger_efternavn);
                 command.Parameters.AddWithValue("@borger_cprnr", nySTEMI._borger_cprnr);
+                command.ExecuteNonQuery();
                 OpenConnectionST.Close();
             }
         }
