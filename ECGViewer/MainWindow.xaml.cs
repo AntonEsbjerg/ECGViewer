@@ -58,6 +58,10 @@ namespace Presentation_Layer
             {
                 this.Close();
             }
+            if(logicObj.GetLokalinfo()._doctor_att==true)
+            {
+                Blinkingbutton(newECG_Button,1000,5);
+            }
 
             foreach (var item in logicObj.ID())
             {
@@ -112,11 +116,19 @@ namespace Presentation_Layer
 
         private void newECG_Button_Click(object sender, RoutedEventArgs e)
         {
-            Blinkingbutton(newECG_Button, 500, 3.0);
-            ecgw = new ECG_Window(logicObj, socsecNB, måleID);
-            this.Hide();
-            ecgw.ShowDialog();
-            this.Show();
+            if(logicObj.GetLokalinfo()._ekgmaaleid!= 0)
+            {
+                ecgw = new ECG_Window(logicObj, socsecNB, måleID);
+                logicObj.GetLokalinfo()._doctor_att = true;
+                this.Hide();
+                ecgw.ShowDialog();
+                this.Show();
+            }
+            else
+            {
+                MessageBox.Show("Ingen ny ECG");
+            }
+            
         }
 
         private void logout_BT_Click(object sender, RoutedEventArgs e)

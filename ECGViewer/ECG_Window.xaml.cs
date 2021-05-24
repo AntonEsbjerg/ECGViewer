@@ -81,7 +81,7 @@ namespace Presentation_Layer
 
             if (result == MessageBoxResult.Yes)
             {
-                logicRef.uploadToDOEDB(logicRef.GetLokalinfo());
+                logicRef.uploadSTEMI(logicRef.GetLokalinfo());
             }
         }
 
@@ -91,7 +91,7 @@ namespace Presentation_Layer
 
             if (result == MessageBoxResult.Yes)
             {
-
+                logicRef.uploadNoSTEMI(logicRef.GetLokalinfo());
             }
         }
     }

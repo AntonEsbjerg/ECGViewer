@@ -44,9 +44,13 @@ namespace Logic_Layer
             DTO_lokalinfo info = dataObject.downloadLokalinfo();
             return info;
         }
-        public void uploadToDOEDB(DTO_lokalinfo nySTEMI)
+        public void uploadSTEMI(DTO_lokalinfo nySTEMI)
         {
-            dataObject.uploadToDOEDB(nySTEMI);
+            dataObject.uploadSTEMI(nySTEMI);
+        }
+        public void uploadNoSTEMI(DTO_lokalinfo nyNoSTEMI)
+        {
+            dataObject.uploadNoSTEMI(nyNoSTEMI);
         }
     }
 }
