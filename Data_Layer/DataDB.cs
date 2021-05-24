@@ -136,25 +136,25 @@ namespace Data_Layer
         public List<DTO_ECG> getECGData(String måleID)
         {
             List<DTO_ECG> ecg = new List<DTO_ECG>();
-            //SqlDataReader rdr;
-            //byte[] bytesArr = new byte[8];
-            //double[] tal;
-            //string selectString = ("Select raa_data From EKGDATA where ekgmaaleid= " + måleID );
-            //using (SqlCommand cmd = new SqlCommand(selectString, connect))
-            //{
-            //    rdr = cmd.ExecuteReader();
-            //    if (rdr.Read())
-            //        bytesArr = (byte[])rdr["raa_data"];
-            //    tal = new double[bytesArr.Length / 8];
+            SqlDataReader rdr;
+            byte[] bytesArr = new byte[8];
+            double[] tal;
+            string selectString = ("Select raa_data From EKGDATA where ekgmaaleid= " + måleID );
+            using (SqlCommand cmd = new SqlCommand(selectString, connect))
+            {
+                rdr = cmd.ExecuteReader();
+                if (rdr.Read())
+                    bytesArr = (byte[])rdr["raa_data"];
+               tal = new double[bytesArr.Length / 8];
 
-            //    for (int i = 0, j = 0; i < bytesArr.Length; i += 8, j++)
-            //        tal[j] = BitConverter.ToDouble(bytesArr, i);
-            //}
-            //connect.Close();
-            //for (int i = 0; i < tal.Length; i++)
-            //{
-            //    ecg.Add(new DTO_ECG(tal[i]));
-            //}
+                for (int i = 0, j = 0; i < bytesArr.Length; i += 8, j++)
+                    tal[j] = BitConverter.ToDouble(bytesArr, i);
+            }
+            connect.Close();
+            for (int i = 0; i < tal.Length; i++)
+            {
+                ecg.Add(new DTO_ECG(tal[i]));
+            }
             return ecg;
         }
         public List<DTO_id> fillComboBox()

@@ -63,7 +63,6 @@ namespace DTO
             _borger_efternavn = borger_efternavn;
             _borger_cprnr = borger_cprnr;
             _doctor_att = doctor_att;
-            
         }
     }
 }
