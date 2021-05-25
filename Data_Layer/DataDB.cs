@@ -97,14 +97,14 @@ namespace Data_Layer
                         if (rdr1.Read())
                         {
                             bytesArr = (byte[])rdr1["raa_data"];
-                            //for (int i = 0, j = 0; i < bytesArr.Length; i += 8, j++)
-                            //{
-                            //    tal.Add(BitConverter.ToDouble(bytesArr, i));
-                            //}
-                            //foreach (var item in tal)
-                            //{
-                            //    lokalECG.Add(new DTO_ECG(item));
-                            //}
+                            for (int i = 0, j = 0; i < bytesArr.Length; i += 8, j++)
+                            {
+                                tal.Add(BitConverter.ToDouble(bytesArr, i));
+                            }
+                            foreach (var item in tal)
+                            {
+                                lokalECG.Add(new DTO_ECG(item));
+                            }
                             ekgdataid = Convert.ToInt32(rdr1["ekgdataid"]);
                             samplerate_hz = Convert.ToInt32(rdr1["samplerate_hz"]);
                             interval_sec = Convert.ToInt32(rdr1["interval_sec"]);
@@ -114,7 +114,7 @@ namespace Data_Layer
                             maaleformat_type = Convert.ToString(rdr1["maaleformat_type"]);
                             start_tid = Convert.ToDateTime(rdr1["start_tid"]);
                             kommentar = Convert.ToString(rdr1["kommentar"]);
-                            //ekgmaaleid = Convert.ToInt32(rdr1["ekgmaaleid"]);
+                            ekgmaaleid = Convert.ToInt32(rdr1["ekgmaaleid"]);
                             maaleenhed_identifikation = Convert.ToString(rdr1["maalenehed_identifikation"]);
                             doctor_overview = true;
                             lokalinfo = new DTO_lokalinfo(stemi_suspected, dato, ekgmaaleid, antalmaalinger, sfp_maaltagerfornavn, sfp_maaltagerefternavn, sfp_maaltagermedarbjdnr,
@@ -186,7 +186,7 @@ namespace Data_Layer
                 "sfp_maaltagermedarbjnr,sfp_mt_org,sfp_mt_kommentar,borger_fornavn,borger_efternavn,borger_cprnr) " +
                 "VALUES (@dato,@antalmaalinger,@sfp_maaltagerfornavn, @sfp_maltagerefternavn,@sfp_maaltagermedarbjnr," +
                 "@sfp_mt_org,@sfp_mt_kommentar,@borger_fornavn,@borger_efternavn,@borger_cprnr)";
-            using (SqlCommand command = new SqlCommand(insertStringDOEDBData, OpenConnectionST))
+            using (SqlCommand command = new SqlCommand(insertStringDOEDBData, connect))
             {
                 tal=nySTEMI._lokalECG.ToArray();
                 for (int i = 0; i < tal.Length; i++)
@@ -204,9 +204,9 @@ namespace Data_Layer
                 command.Parameters.AddWithValue("@kommentar", nySTEMI._kommentar);
                 command.Parameters.AddWithValue("@ekgmaaleid", nySTEMI._ekgmaaleid);
                 command.Parameters.AddWithValue("@maalenehed_identifikation", nySTEMI._maaleenhed_identifikation);
-                //command.ExecuteNonQuery();
+                command.ExecuteNonQuery();
             }
-            using (SqlCommand command = new SqlCommand(insertStringDOEDBMaeling, OpenConnectionST))
+            using (SqlCommand command = new SqlCommand(insertStringDOEDBMaeling, connect))
             {
                 command.Parameters.AddWithValue("@dato", nySTEMI._dato);
                 command.Parameters.AddWithValue("@antalmaalinger", nySTEMI._antalmaalinger);
@@ -218,8 +218,7 @@ namespace Data_Layer
                 command.Parameters.AddWithValue("@borger_fornavn", nySTEMI._borger_fornavn);
                 command.Parameters.AddWithValue("@borger_efternavn", nySTEMI._borger_efternavn);
                 command.Parameters.AddWithValue("@borger_cprnr", nySTEMI._borger_cprnr);
-
-                //command.ExecuteNonQuery();
+                command.ExecuteNonQuery();
             }
 
             SqlCommand command1 = new SqlCommand("UPDATE EKGMAELING SET stemi_paavist=@værdi where ekgmaaleid=@ekgmaaleid", OpenConnectionST);

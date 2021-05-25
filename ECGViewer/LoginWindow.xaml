@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ECGViewer"
         mc:Ignorable="d"
-       Title="Login til din sundhedsplatform" BorderThickness="0.5" Height="404" Width="652" Background="#FFE9F6FC" Loaded="Window_Loaded" WindowStyle="SingleBorderWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" BorderBrush="Black" Closing="LoginW_Closing" Icon="App_logo.png">
+       Title="Login til din sundhedsplatform" BorderThickness="0.5" Height="400" Width="650" Background="#FFE9F6FC" Loaded="Window_Loaded" WindowStyle="SingleBorderWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" BorderBrush="Black" Closing="LoginW_Closing" Icon="App_logo.png">
     <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="92*"/>

@@ -56,15 +56,6 @@ namespace Presentation_Layer
                 STEMI_Button.IsEnabled = false;
                 NOSTEMI_Button.IsEnabled = false;
             }
-            // listerne til x og y værdieren fyldes med data:
-
-            //foreach (var dTO_BSugar in logicRef.getBSugarData(SocSecNb))
-            //{
-            //   Yvalues.Add();
-            //   Xvalues.Add();
-
-
-            //DataContext = this;
         }
 
         private void home_button_Click1(object sender, RoutedEventArgs e)
