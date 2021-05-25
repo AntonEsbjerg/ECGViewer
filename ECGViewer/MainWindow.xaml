@@ -5,19 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ECGViewer"
         mc:Ignorable="d"
-              Title="EPJ-vindue: EKG" Height="1080" Width="1920" Background="#FFE9F6FC" Loaded="Window_Loaded" Icon="App_logo.png" Closing="Window_Closing" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+              Title="EPJ-vindue: EKG" Height="864" Width="1536" Background="#FFE9F6FC" Loaded="Window_Loaded" Icon="App_logo.png" Closing="Window_Closing" WindowStartupLocation="CenterScreen" WindowState="Maximized">
     <Grid>
-        <Button Content="Vigtig Nyt ECG" Margin="1222,239,398,675" Background="#FFEA0808" Height="150" Width="300" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-        <Button x:Name="newECG_Button" Cursor="Hand" Content="Vigtig Nyt ECG" Margin="1222,239,0,0" OpacityMask="#FFEA0808" Click="newECG_Button_Click"  Height="150" Width="300" FontSize="40" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-        <ComboBox x:Name="cpr_CB" Margin="164,292,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="50" Width="469" />
-        <Label Content="Elektronisk Patientjournal: EKG" Margin="331,42,0,0" FontSize="92" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1541"/>
-        <Image Margin="80,42,0,0" Source="Red_Cross_icon.svg.png" VerticalAlignment="Top" HorizontalAlignment="Left" Height="198" Width="234"/>
-        <Button x:Name="valgtEKG_BT" Cursor="Hand" Content="Se EKG for valgte borger" Margin="164,547,0,0" OpacityMask="#FFEA0808" Height="100" Width="469" FontSize="40" VerticalAlignment="Top" HorizontalAlignment="Left" Click="valgtEKG_BT_Click"/>
-        <Button x:Name="logout_BT" Cursor="Hand" Margin="1524,868,0,0" Height="150" Width="300" FontSize="40" VerticalAlignment="Top" HorizontalAlignment="Left" Click="logout_BT_Click" ToolTip="Tryk for logud" BorderBrush="{x:Null}">
+        <Button Content="Vigtig Nyt ECG" Margin="1164,250,0,0" Background="#FFEA0808" Height="150" Width="300" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="40"/>
+        <Button x:Name="newECG_Button" Cursor="Hand" Content="Vigtig Nyt ECG" Margin="1164,250,0,0" OpacityMask="#FFEA0808" Click="newECG_Button_Click"  Height="150" Width="300" FontSize="40" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <ComboBox x:Name="cpr_CB" Margin="43,292,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="50" Width="469" />
+        <Label Content="Elektronisk Patientjournal: EKG" Margin="240,88,0,0" FontSize="60" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Left" Width="919" Height="102"/>
+        <Image Margin="10,42,0,0" Source="Red_Cross_icon.svg.png" VerticalAlignment="Top" HorizontalAlignment="Left" Height="186" Width="191"/>
+        <Button x:Name="valgtEKG_BT" Cursor="Hand" Content="Se EKG for valgte borger" Margin="43,674,0,0" OpacityMask="#FFEA0808" Height="100" Width="469" FontSize="40" VerticalAlignment="Top" HorizontalAlignment="Left" Click="valgtEKG_BT_Click"/>
+        <Button x:Name="logout_BT" Cursor="Hand" Margin="1164,674,0,0" Height="150" Width="300" FontSize="40" VerticalAlignment="Top" HorizontalAlignment="Left" Click="logout_BT_Click" ToolTip="Tryk for logud" BorderBrush="{x:Null}">
             <Button.Background>
                 <ImageBrush ImageSource="Logudpil.png"/>
             </Button.Background>
         </Button>
-        <Label Content="Logud" HorizontalAlignment="Left" Margin="1614,762,0,201" FontSize="40" Width="210"/>
+        <Label Content="Logud" HorizontalAlignment="Left" Margin="1164,584,0,160.4" FontSize="40" Width="210"/>
     </Grid>
 </Window>

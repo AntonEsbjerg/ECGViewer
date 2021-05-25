@@ -12,7 +12,6 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Rectangle Margin="0,47,0,0" Fill="#FFD7EBF5" Height="120" VerticalAlignment="Top" HorizontalAlignment="Center" Width="1806"/>
-
         <lvc:CartesianChart x:Name="ChartECG" Grid.Row="0" Margin="10,175,10,10" LegendLocation="Top" Background="White" FontSize="30">
             <lvc:CartesianChart.Series>
                 <lvc:LineSeries x:Name="Bloodsugar_" Title="EKG-måling" Fill="Transparent" Values="{Binding ecgCollection}" LineSmoothness="0"/>
