@@ -29,26 +29,23 @@ namespace Presentation_Layer
         private ECG_Window ecgw;
         private string socsecNB;
         private String måleID;
-        private List<String> tempsocsecNB;
        
         public MainWindow()
         {
+            // ved opstart oprettes loginvinduet men denne åbnes først i Window_Loaded, programmet bedes også lytte efter tryk på ESC, funktionaliten
+            // for ESC programmeres senere
             loginW = new LoginWindow(this, logicObj);
-            tempsocsecNB = new List<string>();
             InitializeComponent();
             this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            // et Logik objekt oprettes, loginW vises 
             logicObj = new Logic();
             this.Hide();
-
             loginW.ShowDialog();
-
-            cpr_CB.Text = "Find CPR";
-            
-
+            // Hvis at resultatet af loginW er true vises dette vindue igen hvis at resultatet er false forsøges programmet lukket. 
             if (LoginOK == true)
             {
                 this.Show();
@@ -58,14 +55,20 @@ namespace Presentation_Layer
             {
                 this.Close();
             }
-
+            //Hvis at det er en måling i den lokale database som ikke er blevet undersøgt af en læge blinker knappen NewECG
+            if (logicObj.GetLokalinfo()._doctor_att==true)
+            {
+                Blinkingbutton(newECG_Button,1000,5);
+            }
+            // comboboksen fyldes med målinger fra den offentlige EKG-database, de står i formattet "borgerCPR + måling nr: + måleID"
             foreach (var item in logicObj.ID())
             {
-                cpr_CB.Items.Add(item.måleID + " måling nr: " + item.borgerCPR);
+                cpr_CB.Items.Add(item.borgerCPR + " måling nr: " + item.måleID);
             }
         }
         private void HandleEsc(object sender, KeyEventArgs e)
         {
+            // Ved tryk på ESC forsøges at lukke vinduet.
             if (e.Key == Key.Escape)
             {
                 this.Close();
@@ -73,6 +76,7 @@ namespace Presentation_Layer
         }
         public void Blinkingbutton(Button newECG_Button, int length, double repetition)
         {
+            // Den funktion kan kaldes for at få en knap til at blinke.
             DoubleAnimation opacityAnimation = new DoubleAnimation
             {
                 From = 1.0,
@@ -112,28 +116,47 @@ namespace Presentation_Layer
 
         private void newECG_Button_Click(object sender, RoutedEventArgs e)
         {
-            Blinkingbutton(newECG_Button, 500, 3.0);
-            ecgw = new ECG_Window(logicObj, socsecNB, måleID);
-            this.Hide();
-            ecgw.ShowDialog();
-            this.Show();
+            // trykkes på knappen med nyt ecg undersøges det om der er en måling i den lokaledatabase som ikke er blevet set på fra hospitales side
+            // hvis der er sådan en måling vises den i ECG_Window ellers vises en besked om at der ikke er nogen ny måling.
+            if(logicObj.GetLokalinfo()._ekgmaaleid!= 0)
+            {
+                ecgw = new ECG_Window(logicObj, socsecNB, måleID, false);
+                logicObj.GetLokalinfo()._doctor_att = true;
+                this.Hide();
+                ecgw.ShowDialog();
+                this.Show();
+            }
+            else
+            {
+                MessageBox.Show("Ingen ny ECG");
+            }
+            
         }
 
         private void logout_BT_Click(object sender, RoutedEventArgs e)
         {
+            // Programmet forsøges lukket
             this.Close();
         }
         private void valgtEKG_BT_Click(object sender, RoutedEventArgs e)
         {
+            // Eventhandler for tryk på knappen valgtEKG, ved tryk vises en ekg fra den offentlige EKG-database
             int found = 0;
-            found = cpr_CB.Text.IndexOf(" måling nr: ");
-            string måleid= cpr_CB.Text.Substring(found + 12);
-            string cpr= cpr_CB.Text.Substring(0,found);
-            socsecNB = cpr_CB.Text;
-            ecgw = new ECG_Window(logicObj, cpr, måleid);
-            this.Hide();
-            ecgw.ShowDialog();
-            this.Show();         
+            if(cpr_CB.Text!="")
+            {
+                found = cpr_CB.Text.IndexOf(" måling nr: ");
+                string måleid = cpr_CB.Text.Substring(found + 12);
+                string cpr = cpr_CB.Text.Substring(0, found);
+                socsecNB = cpr_CB.Text;
+                ecgw = new ECG_Window(logicObj, cpr, måleid, true);
+                this.Hide();
+                ecgw.ShowDialog();
+                this.Show();
+            }
+            else 
+            {
+                MessageBox.Show("Vælg venligst en ekg måling");
+            }
         }
     }
 }

@@ -12,7 +12,7 @@
         <ComboBox x:Name="cpr_CB" Margin="164,292,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="50" Width="469" />
         <Label Content="Elektronisk Patientjournal: EKG" Margin="331,42,0,0" FontSize="92" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1541"/>
         <Image Margin="80,42,0,0" Source="Red_Cross_icon.svg.png" VerticalAlignment="Top" HorizontalAlignment="Left" Height="198" Width="234"/>
-        <Button x:Name="valgtEKG_BT" Cursor="Hand" Content="Se EKG for valgte borger" Margin="164,866,0,0" OpacityMask="#FFEA0808" Height="100" Width="469" FontSize="40" VerticalAlignment="Top" HorizontalAlignment="Left" Click="valgtEKG_BT_Click"/>
+        <Button x:Name="valgtEKG_BT" Cursor="Hand" Content="Se EKG for valgte borger" Margin="164,547,0,0" OpacityMask="#FFEA0808" Height="100" Width="469" FontSize="40" VerticalAlignment="Top" HorizontalAlignment="Left" Click="valgtEKG_BT_Click"/>
         <Button x:Name="logout_BT" Cursor="Hand" Margin="1524,868,0,0" Height="150" Width="300" FontSize="40" VerticalAlignment="Top" HorizontalAlignment="Left" Click="logout_BT_Click" ToolTip="Tryk for logud" BorderBrush="{x:Null}">
             <Button.Background>
                 <ImageBrush ImageSource="Logudpil.png"/>

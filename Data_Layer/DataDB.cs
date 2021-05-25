@@ -36,11 +36,9 @@ namespace Data_Layer
             using (SqlCommand cmd = new SqlCommand(selectString, OpenConnectionST))
             {
                 rdr = cmd.ExecuteReader();
-
                 if (rdr.Read())
                 {
                     result = true;
-
                 }
                 else result = false;
             }
@@ -52,9 +50,7 @@ namespace Data_Layer
             get
             {
                 var con = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=ST2PRJ2OffEKGDatabase;Integrated Security=False;User ID=ST2PRJ2OffEKGDatabase;Password=ST2PRJ2OffEKGDatabase;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
-
                 con.Open();
-
                 return con;
             }
         }
@@ -62,12 +58,12 @@ namespace Data_Layer
         {
             SqlDataReader rdr; bool stemi_suspected; DateTime dato; int ekgmaaleid; int antalmaalinger; string sfp_maaltagerfornavn;
             string sfp_maaltagerefternavn; string sfp_maaltagermedarbjdnr; string sfp_mt_kommentar; string sfp_mt_org; string borger_fornavn;
-            string borger_efternavn; string borger_cprnr; int ekgdataid; int samplerate_hz; int interval_sec; int interval_min;
+            string borger_efternavn; string borger_cprnr; int ekgdataid; int samplerate_hz; int interval_sec; int interval_min; bool doctor_overview;
             string dataformat; string bin_eller_tekst; string maaleformat_type; DateTime start_tid; string kommentar; string maaleenhed_identifikation;
-            List<double> tal = new List<double>(); byte[] bytesArr = new byte[800]; List<DTO_ECG> lokalECG = new List<DTO_ECG>();
+            List<double> tal = new List<double>(); byte[] bytesArr = new byte[800]; List<DTO_ECG> lokalECG= new List<DTO_ECG>();
             SqlDataReader rdr1;
             DTO_lokalinfo lokalinfo;
-            string insertStringParam = ("Select * from EKGMAELING where stemi_paavist IS NOT NULL and ekgmaaleid=(SELECT max(ekgmaaleid) FROM EKGMaeling)");
+            string insertStringParam = ("Select * from EKGMAELING where stemi_paavist IS NULL and ekgmaaleid=(SELECT max(ekgmaaleid) FROM EKGMaeling)");
 
             using (SqlCommand cmd = new SqlCommand(insertStringParam, OpenConnectionST))
             {
@@ -94,7 +90,7 @@ namespace Data_Layer
                     borger_efternavn = Convert.ToString(rdr["borger_efternavn"]);
                     borger_cprnr = Convert.ToString(rdr["borger_cprnr"]);
 
-                    string insertStringParam1 = ("Select * from EKGDATA where ekgmaaleid= " + ekgmaaleid);
+                    string insertStringParam1 = ("Select * from EKGDATA where ekgmaaleid= "+ekgmaaleid);
                     using (SqlCommand command = new SqlCommand(insertStringParam1, OpenConnectionST))
                     {
                         rdr1 = command.ExecuteReader();
@@ -120,41 +116,41 @@ namespace Data_Layer
                             kommentar = Convert.ToString(rdr1["kommentar"]);
                             //ekgmaaleid = Convert.ToInt32(rdr1["ekgmaaleid"]);
                             maaleenhed_identifikation = Convert.ToString(rdr1["maalenehed_identifikation"]);
+                            doctor_overview = true;
                             lokalinfo = new DTO_lokalinfo(stemi_suspected, dato, ekgmaaleid, antalmaalinger, sfp_maaltagerfornavn, sfp_maaltagerefternavn, sfp_maaltagermedarbjdnr,
                                 sfp_mt_kommentar, sfp_mt_org, borger_fornavn, borger_efternavn, borger_cprnr, ekgdataid, lokalECG, samplerate_hz, interval_sec, interval_min, dataformat,
-                                bin_eller_tekst, maaleformat_type, start_tid, kommentar, maaleenhed_identifikation);
+                                bin_eller_tekst, maaleformat_type, start_tid, kommentar, maaleenhed_identifikation,doctor_overview);
                             OpenConnectionST.Close();
                             return lokalinfo;
                         }
                     }
                 }
-                OpenConnectionST.Close();
-                return lokalinfo = new DTO_lokalinfo(true, Convert.ToDateTime("00/00/0000"), 0, 0, "0", "0", "0", "0", "0", "0", "0", "0", 0, lokalECG, 0, 0, 0, "0", "0", "0", Convert.ToDateTime("20/12/20"), "0", "0");
             }
-
+            OpenConnectionST.Close();
+            return lokalinfo = new DTO_lokalinfo();
         }
         public List<DTO_ECG> getECGData(String måleID)
         {
             List<DTO_ECG> ecg = new List<DTO_ECG>();
-            //SqlDataReader rdr;
-            //byte[] bytesArr = new byte[8];
-            //double[] tal;
-            //string selectString = ("Select raa_data From EKGDATA where ekgmaaleid= " + måleID );
-            //using (SqlCommand cmd = new SqlCommand(selectString, connect))
-            //{
-            //    rdr = cmd.ExecuteReader();
-            //    if (rdr.Read())
-            //        bytesArr = (byte[])rdr["raa_data"];
-            //    tal = new double[bytesArr.Length / 8];
+            SqlDataReader rdr;
+            byte[] bytesArr = new byte[8];
+            double[] tal;
+            string selectString = ("Select raa_data From EKGDATA where ekgmaaleid= " + måleID );
+            using (SqlCommand cmd = new SqlCommand(selectString, connect))
+            {
+                rdr = cmd.ExecuteReader();
+                if (rdr.Read())
+                    bytesArr = (byte[])rdr["raa_data"];
+               tal = new double[bytesArr.Length / 8];
 
-            //    for (int i = 0, j = 0; i < bytesArr.Length; i += 8, j++)
-            //        tal[j] = BitConverter.ToDouble(bytesArr, i);
-            //}
-            //connect.Close();
-            //for (int i = 0; i < tal.Length; i++)
-            //{
-            //    ecg.Add(new DTO_ECG(tal[i]));
-            //}
+                for (int i = 0, j = 0; i < bytesArr.Length; i += 8, j++)
+                    tal[j] = BitConverter.ToDouble(bytesArr, i);
+            }
+            connect.Close();
+            for (int i = 0; i < tal.Length; i++)
+            {
+                ecg.Add(new DTO_ECG(tal[i]));
+            }
             return ecg;
         }
         public List<DTO_id> fillComboBox()
@@ -172,27 +168,27 @@ namespace Data_Layer
                 {
                     socsecNB = Convert.ToString(rdr["borger_cprnr"]);
                     måleID = Convert.ToString(rdr["ekgmaaleid"]);
-                    tempsocsecNB.Add(new DTO_id(socsecNB, måleID));
+                    tempsocsecNB.Add(new DTO_id(måleID, socsecNB));
                 }
             }
             connect.Close();
             return tempsocsecNB;
         }
-        public void uploadToDOEDB(DTO_lokalinfo nySTEMI)
+        public void uploadSTEMI(DTO_lokalinfo nySTEMI)
         {
             DTO_ECG[] tal;
-            double[] ecgVoltage = new double[500];
-            string insertStringParamDOEDB = "INSERT INTO EKGDATA (raa_data,samplerate_hz,interval_sec,interval_min,data_format," +
+            double[] ecgVoltage=new double[500];
+            string insertStringDOEDBData = "INSERT INTO EKGDATA (raa_data,samplerate_hz,interval_sec,interval_min,data_format," +
                 "bin_eller_tekst,maaleformat_type,start_tid,kommentar,ekgmaaleid,maalenehed_identifikation) " +
                 "VALUES (@raa_data, @samplerate_hz, @interval_sec, @interval_min, @data_format, @bin_eller_tekst, " +
                 "@maaleformat_type,@start_tid,@kommentar,@ekgmaaleid,@maalenehed_identifikation)";
-            string insertStringParamDOEDB1 = "INSERT INTO EKGMAELING (dato,antalmaalinger,sfp_maaltagerfornavn,sfp_maltagerefternavn," +
+            string insertStringDOEDBMaeling= "INSERT INTO EKGMAELING (dato,antalmaalinger,sfp_maaltagerfornavn,sfp_maltagerefternavn," +
                 "sfp_maaltagermedarbjnr,sfp_mt_org,sfp_mt_kommentar,borger_fornavn,borger_efternavn,borger_cprnr) " +
                 "VALUES (@dato,@antalmaalinger,@sfp_maaltagerfornavn, @sfp_maltagerefternavn,@sfp_maaltagermedarbjnr," +
                 "@sfp_mt_org,@sfp_mt_kommentar,@borger_fornavn,@borger_efternavn,@borger_cprnr)";
-            using (SqlCommand command = new SqlCommand(insertStringParamDOEDB, OpenConnectionST))
+            using (SqlCommand command = new SqlCommand(insertStringDOEDBData, OpenConnectionST))
             {
-                tal = nySTEMI._lokalECG.ToArray();
+                tal=nySTEMI._lokalECG.ToArray();
                 for (int i = 0; i < tal.Length; i++)
                 {
                     ecgVoltage[i] = Convert.ToDouble(tal[i]);
@@ -208,9 +204,9 @@ namespace Data_Layer
                 command.Parameters.AddWithValue("@kommentar", nySTEMI._kommentar);
                 command.Parameters.AddWithValue("@ekgmaaleid", nySTEMI._ekgmaaleid);
                 command.Parameters.AddWithValue("@maalenehed_identifikation", nySTEMI._maaleenhed_identifikation);
-                command.ExecuteNonQuery();
+                //command.ExecuteNonQuery();
             }
-            using (SqlCommand command = new SqlCommand(insertStringParamDOEDB1, OpenConnectionST))
+            using (SqlCommand command = new SqlCommand(insertStringDOEDBMaeling, OpenConnectionST))
             {
                 command.Parameters.AddWithValue("@dato", nySTEMI._dato);
                 command.Parameters.AddWithValue("@antalmaalinger", nySTEMI._antalmaalinger);
@@ -222,55 +218,23 @@ namespace Data_Layer
                 command.Parameters.AddWithValue("@borger_fornavn", nySTEMI._borger_fornavn);
                 command.Parameters.AddWithValue("@borger_efternavn", nySTEMI._borger_efternavn);
                 command.Parameters.AddWithValue("@borger_cprnr", nySTEMI._borger_cprnr);
-                command.ExecuteNonQuery();
-                OpenConnectionST.Close();
+
+                //command.ExecuteNonQuery();
             }
 
-
-            string insertStringParamDLEDB = "INSERT INTO EKGDATA (raa_data,samplerate_hz,interval_sec,interval_min,data_format," +
-            "bin_eller_tekst,maaleformat_type,start_tid,kommentar,ekgmaaleid,maalenehed_identifikation) " +
-            "VALUES (@raa_data, @samplerate_hz, @interval_sec, @interval_min, @data_format, @bin_eller_tekst, " +
-            "@maaleformat_type,@start_tid,@kommentar,@ekgmaaleid,@maalenehed_identifikation)";
-            string insertStringParamDLEDB1 = "INSERT INTO EKGMAELING (dato,antalmaalinger,sfp_maaltagerfornavn,sfp_maltagerefternavn," +
-                "sfp_maaltagermedarbjnr,sfp_mt_org,sfp_mt_kommentar,borger_fornavn,borger_efternavn,borger_cprnr) " +
-                "VALUES (@dato,@antalmaalinger,@sfp_maaltagerfornavn, @sfp_maltagerefternavn,@sfp_maaltagermedarbjnr," +
-                "@sfp_mt_org,@sfp_mt_kommentar,@borger_fornavn,@borger_efternavn,@borger_cprnr)";
-            using (SqlCommand command = new SqlCommand(insertStringParamDLEDB, OpenConnectionST))
-            {
-                tal = nySTEMI._lokalECG.ToArray();
-                for (int i = 0; i < tal.Length; i++)
-                {
-                    ecgVoltage[i] = Convert.ToDouble(tal[i]);
-                }
-                command.Parameters.AddWithValue("@raa_data", ecgVoltage.SelectMany(value => BitConverter.GetBytes(value)).ToArray());
-                command.Parameters.AddWithValue("@samplerate_hz", nySTEMI._samplerate_hz);
-                command.Parameters.AddWithValue("@interval_sec", nySTEMI._interval_sec);
-                command.Parameters.AddWithValue("@interval_min", nySTEMI._interval_min);
-                command.Parameters.AddWithValue("@data_format", nySTEMI._dataformat);
-                command.Parameters.AddWithValue("@bin_eller_tekst", nySTEMI._bin_eller_tekst);
-                command.Parameters.AddWithValue("@maaleformat_type", nySTEMI._maaleformat_type);
-                command.Parameters.AddWithValue("@start_tid", nySTEMI._start_tid);
-                command.Parameters.AddWithValue("@kommentar", nySTEMI._kommentar);
-                command.Parameters.AddWithValue("@ekgmaaleid", nySTEMI._ekgmaaleid);
-                command.Parameters.AddWithValue("@maalenehed_identifikation", nySTEMI._maaleenhed_identifikation);
-                command.ExecuteNonQuery();
-            }
-            using (SqlCommand command = new SqlCommand(insertStringParamDLEDB1, OpenConnectionST))
-            {
-                command.Parameters.AddWithValue("@dato", nySTEMI._dato);
-                command.Parameters.AddWithValue("@antalmaalinger", nySTEMI._antalmaalinger);
-                command.Parameters.AddWithValue("@sfp_maaltagerfornavn", nySTEMI._sfp_maaltagerfornavn);
-                command.Parameters.AddWithValue("@sfp_maltagerefternavn", nySTEMI._sfp_maaltagerefternavn);
-                command.Parameters.AddWithValue("@sfp_maaltagermedarbjnr", nySTEMI._sfp_maaltagermedarbjdnr);
-                command.Parameters.AddWithValue("@sfp_mt_org", nySTEMI._sfp_mt_org);
-                command.Parameters.AddWithValue("@sfp_mt_kommentar", nySTEMI._sfp_mt_kommentar);
-                command.Parameters.AddWithValue("@borger_fornavn", nySTEMI._borger_fornavn);
-                command.Parameters.AddWithValue("@borger_efternavn", nySTEMI._borger_efternavn);
-                command.Parameters.AddWithValue("@borger_cprnr", nySTEMI._borger_cprnr);
-                command.ExecuteNonQuery();
-                OpenConnectionST.Close();
-            }
+            SqlCommand command1 = new SqlCommand("UPDATE EKGMAELING SET stemi_paavist=@værdi where ekgmaaleid=@ekgmaaleid", OpenConnectionST);
+            command1.Parameters.AddWithValue("@værdi", 1);
+            command1.Parameters.AddWithValue("@ekgmaaleid", nySTEMI._ekgmaaleid);
+            command1.ExecuteNonQuery();
+            OpenConnectionST.Close();
+        }
+        public void uploadNoSTEMI(DTO_lokalinfo nyNoSTEMI)
+        {
+            SqlCommand command1 = new SqlCommand("UPDATE EKGMAELING SET stemi_paavist=@værdi where ekgmaaleid=@ekgmaaleid", OpenConnectionST);
+            command1.Parameters.AddWithValue("@værdi", 0);
+            command1.Parameters.AddWithValue("@ekgmaaleid", nyNoSTEMI._ekgmaaleid);
+            command1.ExecuteNonQuery();
+            OpenConnectionST.Close();
         }
     }
 }
-

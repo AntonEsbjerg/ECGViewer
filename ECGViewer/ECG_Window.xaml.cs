@@ -28,29 +28,21 @@ namespace Presentation_Layer
         Logic logicRef;
         String SocSecNb;
         string måleID;
+        bool offentlig;
         public ChartValues<double> ecgCollection { get; set; }
         public ChartValues<double> Xvalues { get; set; }
 
-        public ECG_Window(Logic logicRef, String SocSecNb, string måleID)
+        public ECG_Window(Logic logicRef, String SocSecNb, string måleID, bool offentlig)
         {
             InitializeComponent();
             this.logicRef = logicRef;
             this.SocSecNb = SocSecNb;
             this.måleID = måleID;
+            this.offentlig = offentlig;
             DataContext = this;
             ecgCollection = new ChartValues<double>();
             Xvalues = new ChartValues<double>();
         }
-        private SqlConnection connect
-        {
-            get
-            {
-                var con = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=ST2PRJ2OffEKGDatabase;Integrated Security=False;User ID=ST2PRJ2OffEKGDatabase;Password=ST2PRJ2OffEKGDatabase;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
-                con.Open();
-                return con;
-            }
-        }
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             ecgCollection.Clear();
@@ -58,6 +50,11 @@ namespace Presentation_Layer
             foreach (var item in logicRef.ECGData(måleID))
             {
                 ecgCollection.Add(item.ECGVoltage);
+            }
+            if(offentlig==true)
+            {
+                STEMI_Button.IsEnabled = false;
+                NOSTEMI_Button.IsEnabled = false;
             }
             // listerne til x og y værdieren fyldes med data:
 
@@ -77,21 +74,24 @@ namespace Presentation_Layer
 
         private void STEMI_Button_Click(object sender, RoutedEventArgs e)
         {
+            // ved tryk skal bekræftes tastet hvis bekræftet uploades den nuværende måling til den Offentlige-EKG-Database hvis denne ikke er taget fra DOEDB.
+            // og diagnosen STEMI uploades til den lokale database hvis den måling ikke er taget fra den Offentlige EKG-Database
             var result = MessageBox.Show("OBS. Du er ved at give diagnosen STEMI, ønsker du at forsætte?", "Advarelse", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
 
             if (result == MessageBoxResult.Yes)
             {
-                logicRef.uploadToDOEDB(logicRef.GetLokalinfo());
+                logicRef.uploadSTEMI(logicRef.GetLokalinfo());
             }
         }
 
         private void NOSTEMI_Button_Click(object sender, RoutedEventArgs e)
         {
+            // ved tryk skal bekræftes tastet hvis bekræftet uploades diagnosen ingen STEMI i den lokale database.
             var result = MessageBox.Show("OBS. Du er ved at give diagnosen INGEN STEMI, ønsker du at forsætte?", "Advarelse", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
 
             if (result == MessageBoxResult.Yes)
             {
-
+                logicRef.uploadNoSTEMI(logicRef.GetLokalinfo());
             }
         }
     }
