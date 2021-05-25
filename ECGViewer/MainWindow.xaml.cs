@@ -142,14 +142,21 @@ namespace Presentation_Layer
         {
             // Eventhandler for tryk på knappen valgtEKG, ved tryk vises en ekg fra den offentlige EKG-database
             int found = 0;
-            found = cpr_CB.Text.IndexOf(" måling nr: ");
-            string måleid= cpr_CB.Text.Substring(found + 12);
-            string cpr= cpr_CB.Text.Substring(0,found);
-            socsecNB = cpr_CB.Text;
-            ecgw = new ECG_Window(logicObj, cpr, måleid, true);
-            this.Hide();
-            ecgw.ShowDialog();
-            this.Show();         
+            if(cpr_CB.Text!="")
+            {
+                found = cpr_CB.Text.IndexOf(" måling nr: ");
+                string måleid = cpr_CB.Text.Substring(found + 12);
+                string cpr = cpr_CB.Text.Substring(0, found);
+                socsecNB = cpr_CB.Text;
+                ecgw = new ECG_Window(logicObj, cpr, måleid, true);
+                this.Hide();
+                ecgw.ShowDialog();
+                this.Show();
+            }
+            else 
+            {
+                MessageBox.Show("Vælg venligst en ekg måling");
+            }
         }
     }
 }

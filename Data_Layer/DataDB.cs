@@ -36,11 +36,9 @@ namespace Data_Layer
             using (SqlCommand cmd = new SqlCommand(selectString, OpenConnectionST))
             {
                 rdr = cmd.ExecuteReader();
-
                 if (rdr.Read())
                 {
                     result = true;
-
                 }
                 else result = false;
             }
@@ -52,9 +50,7 @@ namespace Data_Layer
             get
             {
                 var con = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=ST2PRJ2OffEKGDatabase;Integrated Security=False;User ID=ST2PRJ2OffEKGDatabase;Password=ST2PRJ2OffEKGDatabase;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
-
                 con.Open();
-
                 return con;
             }
         }
@@ -172,7 +168,7 @@ namespace Data_Layer
                 {
                     socsecNB = Convert.ToString(rdr["borger_cprnr"]);
                     måleID = Convert.ToString(rdr["ekgmaaleid"]);
-                    tempsocsecNB.Add(new DTO_id(socsecNB, måleID));
+                    tempsocsecNB.Add(new DTO_id(måleID, socsecNB));
                 }
             }
             connect.Close();
@@ -222,19 +218,20 @@ namespace Data_Layer
                 command.Parameters.AddWithValue("@borger_fornavn", nySTEMI._borger_fornavn);
                 command.Parameters.AddWithValue("@borger_efternavn", nySTEMI._borger_efternavn);
                 command.Parameters.AddWithValue("@borger_cprnr", nySTEMI._borger_cprnr);
+
                 //command.ExecuteNonQuery();
             }
 
-            SqlCommand command1 = new SqlCommand("UPDATE EKGMAELING SET stemi_paavist=@1 where ekgmaaleid=@ekgmaaleid", OpenConnectionST);
-            command1.Parameters.AddWithValue("@1", 1);
+            SqlCommand command1 = new SqlCommand("UPDATE EKGMAELING SET stemi_paavist=@værdi where ekgmaaleid=@ekgmaaleid", OpenConnectionST);
+            command1.Parameters.AddWithValue("@værdi", 1);
             command1.Parameters.AddWithValue("@ekgmaaleid", nySTEMI._ekgmaaleid);
             command1.ExecuteNonQuery();
             OpenConnectionST.Close();
         }
         public void uploadNoSTEMI(DTO_lokalinfo nyNoSTEMI)
         {
-            SqlCommand command1 = new SqlCommand("UPDATE EKGMAELING SET stemi_paavist=@1 where ekgmaaleid=@ekgmaaleid", OpenConnectionST);
-            command1.Parameters.AddWithValue("@1", 0);
+            SqlCommand command1 = new SqlCommand("UPDATE EKGMAELING SET stemi_paavist=@værdi where ekgmaaleid=@ekgmaaleid", OpenConnectionST);
+            command1.Parameters.AddWithValue("@værdi", 0);
             command1.Parameters.AddWithValue("@ekgmaaleid", nyNoSTEMI._ekgmaaleid);
             command1.ExecuteNonQuery();
             OpenConnectionST.Close();
