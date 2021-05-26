@@ -6,13 +6,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ECGViewer"
         mc:Ignorable="d"
-          Title="ECG_Window" Height="1080" Width="1920" Icon="App_logo.png" Loaded="Window_Loaded" WindowState="Maximized">
+          Title="ECG_Window" Height="720" Width="1280" Icon="App_logo.png" Loaded="Window_Loaded" WindowState="Maximized">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Rectangle Margin="0,47,0,0" Fill="#FFD7EBF5" Height="120" VerticalAlignment="Top" HorizontalAlignment="Center" Width="1806"/>
-        <lvc:CartesianChart x:Name="ChartECG" Grid.Row="0" Margin="10,175,10,10" LegendLocation="Top" Background="White" FontSize="30">
+        <Rectangle Margin="1,18,-6.667,0" Fill="#FFD7EBF5" Height="127" VerticalAlignment="Top" HorizontalAlignment="Center" Width="1279"/>
+        <lvc:CartesianChart x:Name="ChartECG" Grid.Row="0" Margin="0,154,10.333,1.667" LegendLocation="Top" Background="White" FontSize="30">
             <lvc:CartesianChart.Series>
                 <lvc:LineSeries x:Name="Bloodsugar_" Title="EKG-måling" Fill="Transparent" Values="{Binding ecgCollection}" LineSmoothness="0"/>
             </lvc:CartesianChart.Series>
@@ -33,17 +33,17 @@
                 <lvc:Axis MinValue="-5" MaxValue="15" MinRange="1" Foreground="White" FontSize="0"/>
             </lvc:CartesianChart.AxisY>
         </lvc:CartesianChart>
-        <Label Content="CPR:" HorizontalAlignment="Left" Margin="72,72,0,0" VerticalAlignment="Top" FontWeight="Bold" Height="104" Width="114" FontSize="40"/>
-        <Label Content="Hovedmenu:" Margin="1430,72,0,0" FontSize="40" FontWeight="Normal" HorizontalAlignment="Left" Width="256" Height="70" VerticalAlignment="Top"/>
-        <Button x:Name="home_button" Cursor="Hand" Margin="1718,68,0,0" BorderBrush="{x:Null}" Click="home_button_Click1" HorizontalAlignment="Left" Width="63" Height="70" VerticalAlignment="Top" ToolTip="Tilbage til hovedmenu">
+        <Label Content="CPR:" HorizontalAlignment="Left" Margin="48,44,0,0" VerticalAlignment="Top" FontWeight="Bold" Height="111" Width="70" FontSize="30"/>
+        <Label Content="Hovedmenu:" Margin="1008,57,0,0" FontSize="30" FontWeight="Normal" HorizontalAlignment="Left" Width="191" Height="74" VerticalAlignment="Top"/>
+        <Button x:Name="home_button" Cursor="Hand" Margin="1200,48,0,0" BorderBrush="{x:Null}" Click="home_button_Click1" HorizontalAlignment="Left" Width="68" Height="74" VerticalAlignment="Top" ToolTip="Tilbage til hovedmenu">
             <Button.Background>
                 <ImageBrush ImageSource="lyric_to_home.png"/>
             </Button.Background>
         </Button>
 
-        <Button x:Name="STEMI_Button" Content="STEMI diagnose" Cursor="Hand" HorizontalAlignment="Left" Margin="607,53,0,0" VerticalAlignment="Top" Width="250" Height="108" FontSize="30" FontWeight="Bold" Background="#FFED1D1D" Click="STEMI_Button_Click"/>
-        <Button x:Name="NOSTEMI_Button" Content="INGEN STEMI" Cursor="Hand" HorizontalAlignment="Left" Margin="1092,53,0,0" VerticalAlignment="Top" Width="250" Height="108" Background="#FF71D087" FontWeight="Bold" FontSize="30" Click="NOSTEMI_Button_Click"/>
-        <Label x:Name="cpr_Lb" HorizontalAlignment="Left" Margin="191,72,0,0" VerticalAlignment="Top" FontSize="40" Width="337" Height="66"/>
+        <Button x:Name="STEMI_Button" Content="STEMI diagnose" Cursor="Hand" HorizontalAlignment="Left" Margin="490,40,0,0" VerticalAlignment="Top" Width="242" Height="82" FontSize="30" FontWeight="Bold" Background="#FFED1D1D" Click="STEMI_Button_Click"/>
+        <Button x:Name="NOSTEMI_Button" Content="INGEN STEMI" Cursor="Hand" HorizontalAlignment="Left" Margin="777,44,0,0" VerticalAlignment="Top" Width="223" Height="78" Background="#FF71D087" FontWeight="Bold" FontSize="30" Click="NOSTEMI_Button_Click"/>
+        <Label x:Name="cpr_Lb" HorizontalAlignment="Left" Margin="142,36,0,0" VerticalAlignment="Top" FontSize="30" Width="211" Height="70"/>
 
     </Grid>
 </Window>
