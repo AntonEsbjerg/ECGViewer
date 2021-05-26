@@ -38,7 +38,6 @@ namespace Presentation_Layer
             InitializeComponent();
             this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
         }
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             // et Logik objekt oprettes, loginW vises 
@@ -49,7 +48,6 @@ namespace Presentation_Layer
             if (LoginOK == true)
             {
                 this.Show();
-
             }
             if (LoginOK == false)
             {
@@ -91,7 +89,6 @@ namespace Presentation_Layer
             Storyboard.SetTargetProperty(opacityAnimation, new PropertyPath("Opacity"));
             storyboard.Begin(newECG_Button);
         }
-
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             //hvis programmet lukkes ved kommando kaldt i koden lukkes vinduet som normalt
@@ -104,7 +101,6 @@ namespace Presentation_Layer
             else
             {
                 e.Cancel = true;
-
                 var result = MessageBox.Show("Ønsker du at lukke programmet?", "Advarelse", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
 
                 if (result == MessageBoxResult.Yes)
@@ -113,7 +109,6 @@ namespace Presentation_Layer
                 }
             }
         }
-
         private void newECG_Button_Click(object sender, RoutedEventArgs e)
         {
             // trykkes på knappen med nyt ecg undersøges det om der er en måling i den lokaledatabase som ikke er blevet set på fra hospitales side
@@ -129,10 +124,8 @@ namespace Presentation_Layer
             else
             {
                 MessageBox.Show("Ingen ny ECG");
-            }
-            
+            }  
         }
-
         private void logout_BT_Click(object sender, RoutedEventArgs e)
         {
             // Programmet forsøges lukket
@@ -159,5 +152,4 @@ namespace Presentation_Layer
             }
         }
     }
-}
-
+}   
