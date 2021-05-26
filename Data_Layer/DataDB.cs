@@ -29,7 +29,7 @@ namespace Data_Layer
         {
             bool result;
             SqlDataReader rdr;
-            string selectString = "select * from gyldigelogin where Brugernavn= '" + username + "'and Adgangskode= '" + pw + "'";
+            string selectString = "select * from db_owner.gyldigelogin where Brugernavn= '" + username + "'and Adgangskode= '" + pw + "'";
 
 
             using (SqlCommand cmd = new SqlCommand(selectString, OpenConnectionST))
@@ -62,7 +62,7 @@ namespace Data_Layer
             List<double> tal = new List<double>(); byte[] bytesArr = new byte[800]; List<DTO_ECG> lokalECG= new List<DTO_ECG>();
             SqlDataReader rdr1;
             DTO_lokalinfo lokalinfo;
-            string insertStringParam = ("Select * from EKGMAELING where stemi_paavist IS NULL and ekgmaaleid=(SELECT max(ekgmaaleid) FROM EKGMaeling)");
+            string insertStringParam = ("Select * from db_owner.EKGMAELING where stemi_paavist IS NULL and ekgmaaleid=(SELECT max(ekgmaaleid) FROM db_owner.EKGMaeling)");
 
             using (SqlCommand cmd = new SqlCommand(insertStringParam, OpenConnectionST))
             {
@@ -134,7 +134,7 @@ namespace Data_Layer
             SqlDataReader rdr;
             byte[] bytesArr = new byte[8];
             double[] tal;
-            string selectString = ("Select raa_data From EKGDATA where ekgmaaleid= " + måleID );
+            string selectString = ("Select raa_data From db_owner.EKGDATA where ekgmaaleid= " + måleID );
             using (SqlCommand cmd = new SqlCommand(selectString, connect))
             {
                 rdr = cmd.ExecuteReader();
@@ -159,7 +159,7 @@ namespace Data_Layer
             List<DTO_id> tempsocsecNB = new List<DTO_id>();
             SqlDataReader rdr;
 
-            string readStringParam = ("Select borger_cprnr,ekgmaaleid from EKGMAELING where borger_cprnr IS NOT NULL");
+            string readStringParam = ("Select borger_cprnr,ekgmaaleid from db_owner.EKGMAELING where borger_cprnr IS NOT NULL");
             using (SqlCommand cmd = new SqlCommand(readStringParam, connect))
             {
                 rdr = cmd.ExecuteReader();
@@ -177,7 +177,7 @@ namespace Data_Layer
         {
             DTO_ECG[] tal;
             double[] ecgVoltage=new double[500];
-            string insertStringDOEDBData = "INSERT INTO EKGDATA (raa_data,samplerate_hz,interval_sec,interval_min,data_format," +
+            string insertStringDOEDBData = "INSERT INTO db_owner.EKGDATA (raa_data,samplerate_hz,interval_sec,interval_min,data_format," +
                 "bin_eller_tekst,maaleformat_type,start_tid,kommentar,ekgmaaleid,maalenehed_identifikation) " +
                 "VALUES (@raa_data, @samplerate_hz, @interval_sec, @interval_min, @data_format, @bin_eller_tekst, " +
                 "@maaleformat_type,@start_tid,@kommentar,@ekgmaaleid,@maalenehed_identifikation)";
@@ -220,7 +220,7 @@ namespace Data_Layer
                 command.ExecuteNonQuery();
             }
 
-            SqlCommand command1 = new SqlCommand("UPDATE EKGMAELING SET stemi_paavist=@værdi where ekgmaaleid=@ekgmaaleid", OpenConnectionST);
+            SqlCommand command1 = new SqlCommand("UPDATE db_owner.EKGMAELING SET stemi_paavist=@værdi where ekgmaaleid=@ekgmaaleid", OpenConnectionST);
             command1.Parameters.AddWithValue("@værdi", 1);
             command1.Parameters.AddWithValue("@ekgmaaleid", nySTEMI._ekgmaaleid);
             command1.ExecuteNonQuery();
@@ -228,7 +228,7 @@ namespace Data_Layer
         }
         public void uploadNoSTEMI(DTO_lokalinfo nyNoSTEMI)
         {
-            SqlCommand command1 = new SqlCommand("UPDATE EKGMAELING SET stemi_paavist=@værdi where ekgmaaleid=@ekgmaaleid", OpenConnectionST);
+            SqlCommand command1 = new SqlCommand("UPDATE db_owner.EKGMAELING SET stemi_paavist=@værdi where ekgmaaleid=@ekgmaaleid", OpenConnectionST);
             command1.Parameters.AddWithValue("@værdi", 0);
             command1.Parameters.AddWithValue("@ekgmaaleid", nyNoSTEMI._ekgmaaleid);
             command1.ExecuteNonQuery();
