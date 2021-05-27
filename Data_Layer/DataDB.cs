@@ -55,7 +55,7 @@ namespace Data_Layer
         }
         public DTO_lokalinfo downloadLokalinfo()
         {
-            SqlDataReader rdr; bool stemi_suspected; DateTime dato; int ekgmaaleid; int antalmaalinger; string sfp_maaltagerfornavn;
+            SqlDataReader rdr; bool stemi_suspected; DateTime dato; int ekgmaaleid; int antalmaalinger; string sfp_maaltagerfornavn; int lokalID;
             string sfp_maaltagerefternavn; string sfp_maaltagermedarbjdnr; string sfp_mt_kommentar; string sfp_mt_org; string borger_fornavn;
             string borger_efternavn; string borger_cprnr; int ekgdataid; int samplerate_hz; int interval_sec; int interval_min; bool doctor_overview;
             string dataformat; string bin_eller_tekst; string maaleformat_type; DateTime start_tid; string kommentar; string maaleenhed_identifikation;
@@ -113,12 +113,12 @@ namespace Data_Layer
                             maaleformat_type = Convert.ToString(rdr1["maaleformat_type"]);
                             start_tid = Convert.ToDateTime(rdr1["start_tid"]);
                             kommentar = Convert.ToString(rdr1["kommentar"]);
-                            ekgmaaleid = Convert.ToInt32(rdr1["ekgmaaleid"]);
+                            lokalID = Convert.ToInt32(rdr1["ekgmaaleid"]);
                             maaleenhed_identifikation = Convert.ToString(rdr1["maalenehed_identifikation"]);
                             doctor_overview = true;
                             lokalinfo = new DTO_lokalinfo(stemi_suspected, dato, ekgmaaleid, antalmaalinger, sfp_maaltagerfornavn, sfp_maaltagerefternavn, sfp_maaltagermedarbjdnr,
                                 sfp_mt_kommentar, sfp_mt_org, borger_fornavn, borger_efternavn, borger_cprnr, ekgdataid, lokalECG, samplerate_hz, interval_sec, interval_min, dataformat,
-                                bin_eller_tekst, maaleformat_type, start_tid, kommentar, maaleenhed_identifikation,doctor_overview);
+                                bin_eller_tekst, maaleformat_type, start_tid, kommentar, maaleenhed_identifikation,doctor_overview, lokalID);
                             OpenConnectionST.Close();
                             return lokalinfo;
                         }
@@ -209,13 +209,15 @@ namespace Data_Layer
                 command.ExecuteNonQuery();
                 connect.Close();
             }
-            string readStringParam = ("Select * from EKGMAELING where ekgmaaleid=(SELECT max(ekgmaaleid) FROM EKGMAELING)");
-            using (SqlCommand cmd = new SqlCommand(readStringParam, connect))
+            string readStringParam2 = ("Select * from EKGMAELING where ekgmaaleid=(SELECT max(ekgmaaleid) FROM EKGMAELING)");
+            using (SqlCommand cmd = new SqlCommand(readStringParam2, connect))
             {
                 SqlDataReader rdr;
                 rdr = cmd.ExecuteReader();
                 if (rdr.Read())
-                 nySTEMI._ekgmaaleid= Convert.ToInt32(rdr["ekgmaaleid"]);
+                {
+                    nySTEMI._ekgmaaleid = (int)rdr["ekgmaaleid"];
+                }
                 connect.Close();
             }
                 using (SqlCommand command = new SqlCommand(insertStringDOEDBData, connect))
@@ -240,7 +242,7 @@ namespace Data_Layer
             }
             
 
-            SqlCommand command1 = new SqlCommand("UPDATE db_owner.EKGMAELING SET stemi_paavist=@værdi where ekgmaaleid=" +nySTEMI._ekgmaaleid, OpenConnectionST);
+            SqlCommand command1 = new SqlCommand("UPDATE db_owner.EKGMAELING SET stemi_paavist=@værdi where ekgmaaleid=" +nySTEMI._lokalID, OpenConnectionST);
             command1.Parameters.AddWithValue("@værdi", 1);
             command1.ExecuteNonQuery();
             OpenConnectionST.Close();
@@ -249,7 +251,7 @@ namespace Data_Layer
         {
             SqlCommand command1 = new SqlCommand("UPDATE db_owner.EKGMAELING SET stemi_paavist=@værdi where ekgmaaleid=@ekgmaaleid", OpenConnectionST);
             command1.Parameters.AddWithValue("@værdi", 0);
-            command1.Parameters.AddWithValue("@ekgmaaleid", nyNoSTEMI._ekgmaaleid);
+            command1.Parameters.AddWithValue("@ekgmaaleid", nyNoSTEMI._lokalID);
             command1.ExecuteNonQuery();
             OpenConnectionST.Close();
         }
