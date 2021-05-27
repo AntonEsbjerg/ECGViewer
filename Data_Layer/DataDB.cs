@@ -134,7 +134,7 @@ namespace Data_Layer
             SqlDataReader rdr;
             byte[] bytesArr = new byte[8];
             double[] tal;
-            string selectString = ("Select raa_data From EKGDATA where ekgmaaleid= " + måleID );
+            string selectString = ("Select raa_data From EKGDATA where ekgmaaleid= " + Convert.ToInt32(måleID) );
             using (SqlCommand cmd = new SqlCommand(selectString, connect))
             {
                 rdr = cmd.ExecuteReader();
