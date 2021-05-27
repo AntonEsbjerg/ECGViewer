@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ECGViewer"
         mc:Ignorable="d"
-       Title="Login til din sundhedsplatform" BorderThickness="0.5"  Height="400" Width="650" Loaded="Window_Loaded" WindowStyle="SingleBorderWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Closing="LoginW_Closing" Icon="icons8-heart-with-pulse-100.png" Background="{x:Null}">
+       Title="Login til din sundhedsplatform" BorderThickness="0.5"  Height="400" Width="650" Loaded="Window_Loaded" WindowStyle="SingleBorderWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Closing="LoginW_Closing" Icon="FDS.png" Background="{x:Null}">
     <Window.Resources>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">

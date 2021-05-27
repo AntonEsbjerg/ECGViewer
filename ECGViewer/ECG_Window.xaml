@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ECGViewer"
         mc:Ignorable="d"
-          Title="ECG_Window" Height="700" Width="1200" Icon="App_logo.png" ResizeMode="NoResize" Loaded="Window_Loaded" WindowState="Maximized" Background="{x:Null}">
+          Title="ECG_Window" Height="700" Width="1200" Icon="FDS.png" ResizeMode="NoResize" Loaded="Window_Loaded" WindowState="Maximized" Background="{x:Null}">
     <Window.Resources>
         <Style x:Key="Rounded" TargetType="{x:Type lvc:CartesianChart}">
             <Setter Property="Template">
