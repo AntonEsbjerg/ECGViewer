@@ -28,7 +28,7 @@ namespace Presentation_Layer
         private Logic logicObj;
         private ECG_Window ecgw;
         private string socsecNB;
-        private String måleID;
+        private string måleID;
        
         public MainWindow()
         {
@@ -128,9 +128,13 @@ namespace Presentation_Layer
         }
         private void logout_BT_Click(object sender, RoutedEventArgs e)
         {
-            // Programmet forsøges lukket
+            // Programmet forsøges at logge ud af nuværende bruger og returnere til loginvinduet
+            this.Hide();
+            var mv = new MainWindow();
+            mv.Show();
+            LoginOK = false;
             this.Close();
-        }
+      }
         private void valgtEKG_BT_Click(object sender, RoutedEventArgs e)
         {
             // Eventhandler for tryk på knappen valgtEKG, ved tryk vises en ekg fra den offentlige EKG-database
@@ -146,6 +150,7 @@ namespace Presentation_Layer
                 ecgw.ShowDialog();
                 this.Show();
             }
+
             else 
             {
                 MessageBox.Show("Vælg venligst en ekg måling");
