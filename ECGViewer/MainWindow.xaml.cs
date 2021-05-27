@@ -111,10 +111,10 @@ namespace Presentation_Layer
         }
         private void newECG_Button_Click(object sender, RoutedEventArgs e)
         {
-            måleID = Convert.ToString(logicObj.GetLokalinfo()._ekgmaaleid);
+            måleID = Convert.ToString(logicObj.GetLokalinfo()._lokalID);
             // trykkes på knappen med nyt ecg undersøges det om der er en måling i den lokaledatabase som ikke er blevet set på fra hospitales side
             // hvis der er sådan en måling vises den i ECG_Window ellers vises en besked om at der ikke er nogen ny måling.
-            if(logicObj.GetLokalinfo()._ekgmaaleid!= 0)
+            if(logicObj.GetLokalinfo()._lokalID!= 0)
             {
                 ecgw = new ECG_Window(logicObj, socsecNB, måleID, false);
                 logicObj.GetLokalinfo()._doctor_att = true;
