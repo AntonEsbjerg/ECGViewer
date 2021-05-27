@@ -206,10 +206,19 @@ namespace Data_Layer
                 command.Parameters.AddWithValue("@borger_efternavn", nySTEMI._borger_efternavn);
                 command.Parameters.AddWithValue("@borger_beskrivelse", "");
                 command.Parameters.AddWithValue("@borger_cprnr", nySTEMI._borger_cprnr);
-                id= Convert.ToInt32(command.ExecuteScalar());
-                nySTEMI._ekgmaaleid = id;
+                command.ExecuteNonQuery();
+                connect.Close();
             }
-            using (SqlCommand command = new SqlCommand(insertStringDOEDBData, connect))
+            string readStringParam = ("Select * from EKGMAELING where ekgmaaleid=(SELECT max(ekgmaaleid) FROM EKGMAELING)");
+            using (SqlCommand cmd = new SqlCommand(readStringParam, connect))
+            {
+                SqlDataReader rdr;
+                rdr = cmd.ExecuteReader();
+                if (rdr.Read())
+                 nySTEMI._ekgmaaleid= (int)rdr["ekgmaaleid"];
+                connect.Close();
+            }
+                using (SqlCommand command = new SqlCommand(insertStringDOEDBData, connect))
             {
                 tal=nySTEMI._lokalECG.ToArray();
                 for (int i = 0; i < tal.Length; i++)
