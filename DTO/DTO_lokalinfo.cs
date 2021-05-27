@@ -32,12 +32,13 @@ namespace DTO
         public string _kommentar { get; set; }
         public string _maaleenhed_identifikation { get; set; }
         public bool _doctor_att { get; set; }
+        public int _lokalID { get; set; }
         public DTO_lokalinfo() { }
 
         public DTO_lokalinfo(bool stemi_suspected, DateTime dato, int ekgmaaleid, int antalmaalinger, string sfp_maaltagerfornavn,
            string sfp_maaltagerefternavn, string sfp_maaltagermedarbjdnr, string sfp_mt_kommentar, string sfp_mt_org, string borger_fornavn,
            string borger_efternavn, string borger_cprnr, int ekgdataid, List<DTO_ECG> lokalECG, int samplerate_hz, int interval_sec, int interval_min,
-           string dataformat, string bin_eller_tekst, string maaleformat_type, DateTime starttid, string kommentar, string maaleenhed_identifikation, bool doctor_att)
+           string dataformat, string bin_eller_tekst, string maaleformat_type, DateTime starttid, string kommentar, string maaleenhed_identifikation, bool doctor_att, int lokalID)
         {
             _interval_min = interval_min;
             _samplerate_hz = samplerate_hz;
@@ -63,6 +64,7 @@ namespace DTO
             _borger_efternavn = borger_efternavn;
             _borger_cprnr = borger_cprnr;
             _doctor_att = doctor_att;
+            _lokalID = lokalID;
         }
     }
 }
