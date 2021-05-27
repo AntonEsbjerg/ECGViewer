@@ -182,15 +182,15 @@ namespace Data_Layer
                 "VALUES (@raa_data, @samplerate_hz, @interval_sec, @interval_min, @data_format, @bin_eller_tekst, " +
                 "@maaleformat_type,@start_tid,@kommentar,@ekgmaaleid,@maalenehed_identifikation)";
             string insertStringDOEDBMaeling= "INSERT INTO EKGMAELING (dato,antalmaalinger,sfp_maaltagerfornavn,sfp_maltagerefternavn," +
-                "sfp_maaltagermedarbjnr,sfp_mt_org,sfp_mt_kommentar,borger_fornavn,borger_efternavn,borger_cprnr) " +
-                "VALUES (@dato,@antalmaalinger,@sfp_maaltagerfornavn, @sfp_maltagerefternavn,@sfp_maaltagermedarbjnr," +
+                "sfp_maaltagermedarbjnr,sfp_ansvrmedarbjnr, sfp_mt_org,sfp_mt_kommentar,borger_fornavn,borger_efternavn,borger_cprnr) " +
+                "VALUES (@dato,@antalmaalinger,@sfp_maaltagerfornavn, @sfp_maltagerefternavn,@sfp_maaltagermedarbjnr,@sfp_ansvrmedarbjnr" +
                 "@sfp_mt_org,@sfp_mt_kommentar,@borger_fornavn,@borger_efternavn,@borger_cprnr)";
             using (SqlCommand command = new SqlCommand(insertStringDOEDBData, connect))
             {
                 tal=nySTEMI._lokalECG.ToArray();
                 for (int i = 0; i < tal.Length; i++)
                 {
-                    ecgVoltage[i] = Convert.ToDouble(tal[i]);
+                    ecgVoltage[i] = tal[i].ECGVoltage;
                 }
                 command.Parameters.AddWithValue("@raa_data", ecgVoltage.SelectMany(value => BitConverter.GetBytes(value)).ToArray());
                 command.Parameters.AddWithValue("@samplerate_hz", nySTEMI._samplerate_hz);
