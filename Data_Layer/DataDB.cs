@@ -216,7 +216,7 @@ namespace Data_Layer
                 rdr = cmd.ExecuteReader();
                 if (rdr.Read())
                 {
-                    nySTEMI._ekgmaaleid = (int)rdr["ekgmaaleid"];
+                    nySTEMI._ekgmaaleid = Convert.ToInt32(rdr["ekgmaaleid"]);
                 }
                 connect.Close();
             }
