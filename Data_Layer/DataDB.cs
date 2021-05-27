@@ -206,7 +206,8 @@ namespace Data_Layer
                 command.Parameters.AddWithValue("@borger_efternavn", nySTEMI._borger_efternavn);
                 command.Parameters.AddWithValue("@borger_beskrivelse", "");
                 command.Parameters.AddWithValue("@borger_cprnr", nySTEMI._borger_cprnr);
-                nySTEMI._ekgmaaleid=Convert.ToInt32(command.ExecuteScalar());
+                id= Convert.ToInt32(command.ExecuteScalar());
+                nySTEMI._ekgmaaleid = id;
             }
             using (SqlCommand command = new SqlCommand(insertStringDOEDBData, connect))
             {
@@ -230,9 +231,8 @@ namespace Data_Layer
             }
             
 
-            SqlCommand command1 = new SqlCommand("UPDATE db_owner.EKGMAELING SET stemi_paavist=@værdi where ekgmaaleid=@ekgmaaleid", OpenConnectionST);
+            SqlCommand command1 = new SqlCommand("UPDATE db_owner.EKGMAELING SET stemi_paavist=@værdi where ekgmaaleid=" +nySTEMI._ekgmaaleid, OpenConnectionST);
             command1.Parameters.AddWithValue("@værdi", 1);
-            command1.Parameters.AddWithValue("@ekgmaaleid", nySTEMI._ekgmaaleid);
             command1.ExecuteNonQuery();
             OpenConnectionST.Close();
         }
