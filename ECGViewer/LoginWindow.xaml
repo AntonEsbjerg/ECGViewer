@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ECGViewer"
         mc:Ignorable="d"
-       Title="Login til din sundhedsplatform" BorderThickness="0.5"  Height="400" Width="650" Loaded="Window_Loaded" WindowStyle="SingleBorderWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Closing="LoginW_Closing" Icon="FDS.png" Background="{x:Null}">
+       Title="Login til din sundhedsplatform" BorderThickness="0.5"  Height="400" Width="650" Loaded="Window_Loaded" WindowStyle="SingleBorderWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Closing="LoginW_Closing" Icon="FDS.png" Background="{x:Null}" Foreground="{x:Null}">
     <Window.Resources>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
@@ -143,7 +143,7 @@
             <ColumnDefinition Width="0*"/>
         </Grid.ColumnDefinitions>
 
-        <Border BorderBrush="#FFE9F6FC"   BorderThickness="1" CornerRadius="10" Margin="0,0,0.333,-0.333" Background="#FFB5D7E6" Height="371" VerticalAlignment="Bottom"/>
+        <Border   BorderThickness="1" CornerRadius="10" Margin="0,0,0.333,-0.333" Background="#FFB5D7E6" Height="371" VerticalAlignment="Bottom"/>
         <Label Content="Brugernavn:" HorizontalAlignment="Left" Margin="165,65,0,0" VerticalAlignment="Top" Height="37" Width="238" FontWeight="Bold" FontSize="16"/>
         <Label Content="Adgangskode:" Margin="167,172,190.333,0" VerticalAlignment="Top" Height="34" FontWeight="Bold" FontSize="16"/>
         <TextBox x:Name="brugernavn_TB" HorizontalAlignment="Left" Margin="165,99,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="278" Height="25" FontSize="16"/>
