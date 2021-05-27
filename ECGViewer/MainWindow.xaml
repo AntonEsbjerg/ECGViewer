@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ECGViewer"
         mc:Ignorable="d"
-              Title="EPJ-vindue: EKG" Height="700" Width="1200" ResizeMode="NoResize" Background="{x:Null}" Loaded="Window_Loaded" Icon="FDS.png" Closing="Window_Closing" WindowStartupLocation="CenterScreen" WindowState="Maximized" >
+              Title="EPJ-vindue: EKG" Height="700" Width="1200" ResizeMode="NoResize" Background="White" Loaded="Window_Loaded" Icon="FDS.png" Closing="Window_Closing" WindowStartupLocation="CenterScreen" WindowState="Maximized" >
     <Window.Resources>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
@@ -148,11 +148,9 @@
         <Rectangle Fill="White" Margin="0,0,0.333,522.667"/>
         <Label Content="Elektronisk PatientJournal " Margin="303,41,0,0" FontSize="45" VerticalAlignment="Top" HorizontalAlignment="Left" Width="569" Height="66" FontWeight="Bold" FontFamily="Century Gothic" Foreground="#FFB20C1C"/>
         <Image Margin="43,10,0,0" Source="FDS.png" VerticalAlignment="Top" HorizontalAlignment="Left" Height="139" Width="120" OpacityMask="Black"/>
-        <Rectangle Fill="#FFB20C1C"  Margin="979,43,0,0" HorizontalAlignment="Left" Width="178" Height="63" VerticalAlignment="Top"/>
-        <Label Content="Log ud:" HorizontalAlignment="Left" Margin="990,51,0,574" FontSize="25" Width="126" FontWeight="Bold" Foreground="White"/>
-        <Button x:Name="logout_BT" Cursor="Hand" Height="55" Width="47" FontSize="40" VerticalAlignment="Top" HorizontalAlignment="Left" Click="logout_BT_Click" ToolTip="Tryk for logud" BorderBrush="{x:Null}" Margin="1104,45,0,0" Foreground="White">
+        <Button x:Name="logout_BT" Cursor="Hand" Height="55" Width="154" FontSize="40" VerticalAlignment="Top" HorizontalAlignment="Left" Click="logout_BT_Click" ToolTip="Tryk for logud" BorderBrush="{x:Null}" Margin="997,45,0,0" Foreground="White">
             <Button.Background>
-                <ImageBrush ImageSource="icons8-exit-96 (1).png"/>
+                <ImageBrush ImageSource="Skærmbillede 2021-05-27 125041.png"/>
             </Button.Background>
         </Button>
         <Image HorizontalAlignment="Left" Height="224" Margin="647,415,0,0" VerticalAlignment="Top" Width="538" Source="Ambulance_Neutral.png"/>

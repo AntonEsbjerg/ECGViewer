@@ -183,5 +183,8 @@
   <ItemGroup>
     <Resource Include=",kj.PNG" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Skærmbillede 2021-05-27 125041.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

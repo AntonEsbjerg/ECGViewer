@@ -183,7 +183,7 @@ namespace Data_Layer
                 "@maaleformat_type,@start_tid,@kommentar,@ekgmaaleid,@maalenehed_identifikation)";
             string insertStringDOEDBMaeling= "INSERT INTO EKGMAELING (dato,antalmaalinger,sfp_maaltagerfornavn,sfp_maltagerefternavn," +
                 "sfp_maaltagermedarbjnr, sfp_mt_org,sfp_mt_kommentar,sfp_ansvfornavn,sfp_ansvefternavn,sfp_ansvrmedarbjnr,sfp_ans_org," +
-                "sfp_anskommentar,borger_fornavn,borger_efternavn,borger_beskrivelse,borger_cprnr) " +
+                "sfp_anskommentar,borger_fornavn,borger_efternavn,borger_beskrivelse,borger_cprnr) " + "OUTPUT INSERTED.ekgmaaleid "+
                 "VALUES (@dato,@antalmaalinger,@sfp_maaltagerfornavn, @sfp_maltagerefternavn,@sfp_maaltagermedarbjnr," +
                 "@sfp_mt_org,@sfp_mt_kommentar, @sfp_ansvfornavn,@sfp_ansvefternavn,@sfp_ansvrmedarbjnr,@sfp_ans_org," +
                 "@sfp_anskommentar,@borger_fornavn,@borger_efternavn,@borger_beskrivelse,@borger_cprnr)";
