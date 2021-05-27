@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ECGViewer"
         mc:Ignorable="d"
-          Title="ECG_Window" Height="720" Width="1280" Icon="App_logo.png" Loaded="Window_Loaded" WindowState="Maximized" Background="{x:Null}">
+          Title="ECG_Window" Height="700" Width="1200" Icon="App_logo.png" ResizeMode="NoResize" Loaded="Window_Loaded" WindowState="Maximized" Background="{x:Null}">
     <Window.Resources>
         <Style x:Key="Rounded" TargetType="{x:Type lvc:CartesianChart}">
             <Setter Property="Template">
@@ -177,15 +177,15 @@
             </lvc:CartesianChart.AxisY>
         </lvc:CartesianChart>
         <Label Content="CPR:" HorizontalAlignment="Left" Margin="48,44,0,0" VerticalAlignment="Top" FontWeight="Bold" Height="62" Width="89" FontSize="30"/>
-        <Button x:Name="home_button" Cursor="Hand" Margin="1177,40,0,0" BorderBrush="{x:Null}" Click="home_button_Click1" HorizontalAlignment="Left" Width="73" Height="74" VerticalAlignment="Top" ToolTip="Tilbage til hovedmenu" Foreground="{x:Null}" Style="{DynamicResource ButtonStyle2}">
+        <Button x:Name="home_button" Cursor="Hand" Margin="1123,44,0,0" BorderBrush="{x:Null}" Click="home_button_Click1" Height="62" VerticalAlignment="Top" ToolTip="Tilbage til hovedmenu" Foreground="{x:Null}" Style="{DynamicResource ButtonStyle2}" HorizontalAlignment="Left" Width="62">
             <Button.Background>
                 <ImageBrush ImageSource=",kj.PNG"/>
             </Button.Background>
         </Button>
-        <Label Content="Hovedmenu:" Margin="981,51,0,0" FontSize="30" FontWeight="Bold" HorizontalAlignment="Left" Width="191" Height="74" VerticalAlignment="Top"/>
+        <Label Content="Hovedmenu:" Margin="952,50,0,0" FontSize="25" FontWeight="Bold" HorizontalAlignment="Left" Width="163" Height="74" VerticalAlignment="Top"/>
 
-        <Button x:Name="STEMI_Button" Content="STEMI diagnose" Cursor="Hand" HorizontalAlignment="Left" Margin="418,36,0,0" VerticalAlignment="Top" Width="242" Height="82" FontSize="30" FontWeight="Bold" Background="#FFED1D1D" Click="STEMI_Button_Click" Style="{DynamicResource Round}" BorderBrush="{x:Null}"/>
-        <Button x:Name="NOSTEMI_Button" Content="INGEN STEMI" Cursor="Hand" HorizontalAlignment="Left" Margin="725,36,0,0" VerticalAlignment="Top" Width="223" Height="82" Background="#FF71D087" FontWeight="Bold" FontSize="30" Click="NOSTEMI_Button_Click" Style="{DynamicResource ButtonStyle1}" BorderBrush="{x:Null}"/>
+        <Button x:Name="STEMI_Button" Content="STEMI diagnose" Cursor="Hand" HorizontalAlignment="Left" Margin="418,36,0,0" VerticalAlignment="Top" Width="209" Height="70" FontSize="25" FontWeight="Bold" Background="#FFED1D1D" Click="STEMI_Button_Click" Style="{DynamicResource Round}" BorderBrush="{x:Null}"/>
+        <Button x:Name="NOSTEMI_Button" Content="INGEN STEMI" Cursor="Hand" HorizontalAlignment="Left" Margin="671,37,0,0" VerticalAlignment="Top" Width="209" Height="70" Background="#FF71D087" FontWeight="Bold" FontSize="25" Click="NOSTEMI_Button_Click" Style="{DynamicResource ButtonStyle1}" BorderBrush="{x:Null}"/>
         <Label x:Name="cpr_Lb" HorizontalAlignment="Left" Margin="142,36,0,0" VerticalAlignment="Top" FontSize="30" Width="211" Height="70"/>
 
     </Grid>

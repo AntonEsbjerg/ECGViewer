@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ECGViewer"
         mc:Ignorable="d"
-              Title="EPJ-vindue: EKG" Height="720" Width="1280" Background="{x:Null}" Loaded="Window_Loaded" Icon="FDS.png" Closing="Window_Closing" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+              Title="EPJ-vindue: EKG" Height="700" Width="1200" ResizeMode="NoResize" Background="{x:Null}" Loaded="Window_Loaded" Icon="FDS.png" Closing="Window_Closing" WindowStartupLocation="CenterScreen" WindowState="Maximized" >
     <Window.Resources>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
@@ -139,23 +139,23 @@
     </Window.Resources>
     <Grid>
         <Border BorderBrush="#FFE9F6FC" BorderThickness="1" CornerRadius="10" Margin="0,0,0.333,-0.333" Height="691" VerticalAlignment="Bottom" Background="#FFB5D7E6">
-            <Label Content="Vælg EKG-måling:" Margin="45.667,224.667,874,400.333" FontSize="30" FontWeight="Bold"/>
+            <Label Content="Vælg EKG-måling:" Margin="45.667,240.667,874.333,384.333" FontSize="25" FontWeight="Bold"/>
         </Border>
-        <Button Content="" Margin="827,218,0,0" Background="#FFB20C1C" Height="150" Width="300" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="40" Style="{DynamicResource RoundedRed}" BorderBrush="{x:Null}"/>
-        <Button x:Name="newECG_Button" Cursor="Hand" Content="VIGTIGT NYT" Margin="827,218,0,0" OpacityMask="#FFEA0808" Click="newECG_Button_Click"  Height="150" Width="300" FontSize="40" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{DynamicResource RoundedButton}" FontWeight="Bold" Foreground="#FFB20C1C" Background="White" BorderBrush="{x:Null}"/>
+        <Button Content="" Margin="777,218,0,0" Background="#FFB20C1C" Height="117" Width="289" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="40" Style="{DynamicResource RoundedRed}" BorderBrush="{x:Null}"/>
+        <Button x:Name="newECG_Button" Cursor="Hand" Content="VIGTIGT NYT" Margin="777,218,0,0" OpacityMask="#FFEA0808" Click="newECG_Button_Click"  Height="117" Width="289" FontSize="40" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{DynamicResource RoundedButton}" FontWeight="Bold" Foreground="#FFB20C1C" Background="White" BorderBrush="{x:Null}"/>
         <ComboBox x:Name="cpr_CB" Margin="43,284,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="51" Width="469" />
-        <Button x:Name="valgtEKG_BT" Cursor="Hand" Content="Se EKG " Margin="43,566,0,0" OpacityMask="#FFEA0808" Height="85" Width="469" FontSize="38" VerticalAlignment="Top" HorizontalAlignment="Left" Click="valgtEKG_BT_Click" Style="{DynamicResource Roundedbuttonstyle}" Background="White" FontWeight="Bold" Foreground="#FFB20C1C" BorderBrush="{x:Null}"/>
+        <Button x:Name="valgtEKG_BT" Cursor="Hand" Content="Se EKG " Margin="43,506,0,0" OpacityMask="#FFEA0808" Height="85" Width="469" FontSize="38" VerticalAlignment="Top" HorizontalAlignment="Left" Click="valgtEKG_BT_Click" Style="{DynamicResource Roundedbuttonstyle}" Background="White" FontWeight="Bold" Foreground="#FFB20C1C" BorderBrush="{x:Null}"/>
         <Rectangle Fill="White" Margin="0,0,0.333,522.667"/>
-        <Label Content="Elektronisk PatientJournal " Margin="303,59,0,0" FontSize="45" VerticalAlignment="Top" HorizontalAlignment="Left" Width="569" Height="66" FontWeight="Bold" FontFamily="Century Gothic" Foreground="#FFB20C1C"/>
-        <Image Margin="43,10,0,0" Source="rwr.png" VerticalAlignment="Top" HorizontalAlignment="Left" Height="145" Width="166" OpacityMask="Black"/>
-        <Rectangle Fill="#FFB20C1C"  Margin="1009,43,49.333,565.667"/>
-        <Label Content="Log ud:" HorizontalAlignment="Left" Margin="1025,59,0,578.667" FontSize="30" Width="126" FontWeight="Bold" Foreground="White"/>
-        <Button x:Name="logout_BT" Cursor="Hand" Height="86" Width="82" FontSize="40" VerticalAlignment="Top" HorizontalAlignment="Left" Click="logout_BT_Click" ToolTip="Tryk for logud" BorderBrush="{x:Null}" Margin="1134,43,0,0" Foreground="White">
+        <Label Content="Elektronisk PatientJournal " Margin="303,41,0,0" FontSize="45" VerticalAlignment="Top" HorizontalAlignment="Left" Width="569" Height="66" FontWeight="Bold" FontFamily="Century Gothic" Foreground="#FFB20C1C"/>
+        <Image Margin="43,10,0,0" Source="rwr.png" VerticalAlignment="Top" HorizontalAlignment="Left" Height="139" Width="120" OpacityMask="Black"/>
+        <Rectangle Fill="#FFB20C1C"  Margin="979,43,37.667,566"/>
+        <Label Content="Log ud:" HorizontalAlignment="Left" Margin="990,51,0,574" FontSize="25" Width="126" FontWeight="Bold" Foreground="White"/>
+        <Button x:Name="logout_BT" Cursor="Hand" Height="55" Width="47" FontSize="40" VerticalAlignment="Top" HorizontalAlignment="Left" Click="logout_BT_Click" ToolTip="Tryk for logud" BorderBrush="{x:Null}" Margin="1104,45,0,0" Foreground="White">
             <Button.Background>
                 <ImageBrush ImageSource="icons8-exit-96 (1).png"/>
             </Button.Background>
         </Button>
-        <Image HorizontalAlignment="Left" Height="254" Margin="657,427,0,0" VerticalAlignment="Top" Width="606" Source="Ambulance_Neutral.png"/>
+        <Image HorizontalAlignment="Left" Height="224" Margin="647,415,0,0" VerticalAlignment="Top" Width="538" Source="Ambulance_Neutral.png"/>
 
     </Grid>
 </Window>
