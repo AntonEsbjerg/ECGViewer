@@ -157,23 +157,23 @@
                  " Background="#FFB5D7E6"/>
         <lvc:CartesianChart x:Name="ChartECG" Grid.Row="0" Margin="5,146,5.333,9.667" LegendLocation="Top" Background="White" FontSize="30" Style="{DynamicResource Rounded}">
             <lvc:CartesianChart.Series>
-                <lvc:LineSeries x:Name="Bloodsugar_" Title="EKG-måling" Fill="Transparent" Values="{Binding ecgCollection}" LineSmoothness="0"/>
+                <lvc:LineSeries x:Name="Bloodsugar_" Title="EKG-måling" Fill="Transparent" Values="{Binding ecgCollection}" LineSmoothness="0" PointGeometry="{x:Null}" />
             </lvc:CartesianChart.Series>
             <lvc:CartesianChart.AxisX>
                 <lvc:Axis Title="Tid [20 mS]" FontSize="30" LabelsRotation="-45">
                     <lvc:Axis.Separator>
-                        <lvc:Separator IsEnabled="True" Step="1" Stroke="#FF6C6969" />
+                        <lvc:Separator IsEnabled="True" Step="10" Stroke="#FF6C6969" />
                     </lvc:Axis.Separator>
                 </lvc:Axis>
                 <lvc:Axis MaxValue="500">
                     <lvc:Axis.Separator>
-                        <lvc:Separator IsEnabled="True" Step="1" Stroke="#FFB4B4B4" />
+                        <lvc:Separator IsEnabled="True" Step="10" Stroke="#FFB4B4B4" />
                     </lvc:Axis.Separator>
                 </lvc:Axis>
             </lvc:CartesianChart.AxisX>
             <lvc:CartesianChart.AxisY>
                 <lvc:Axis Title="Amplitude [mV]" FontSize="30" Foreground="Red"/>
-                <lvc:Axis MinValue="-5" MaxValue="15" MinRange="1" Foreground="White" FontSize="0"/>
+                <lvc:Axis MinRange="1" Foreground="White" FontSize="0"/>
             </lvc:CartesianChart.AxisY>
         </lvc:CartesianChart>
         <Label Content="CPR:" HorizontalAlignment="Left" Margin="48,44,0,0" VerticalAlignment="Top" FontWeight="Bold" Height="62" Width="89" FontSize="30"/>
