@@ -47,14 +47,22 @@ namespace Presentation_Layer
         {
             ecgCollection.Clear();
             cpr_Lb.Content = SocSecNb;
-            foreach (var item in logicRef.ECGData(måleID))
+            if(offentlig == true)
             {
-                ecgCollection.Add(item.ECGVoltage);
+                foreach (var item in logicRef.ECGData(måleID))
+                {
+                    ecgCollection.Add(item.ECGVoltage);
+
+                }          
+                    STEMI_Button.IsEnabled = false;
+                    NOSTEMI_Button.IsEnabled = false;
             }
-            if(offentlig==true)
+            else if(offentlig==false)
             {
-                STEMI_Button.IsEnabled = false;
-                NOSTEMI_Button.IsEnabled = false;
+                foreach (var item in logicRef.GetLokalinfo()._lokalECG)
+                {
+                    ecgCollection.Add(item.ECGVoltage);
+                }
             }
         }
 
