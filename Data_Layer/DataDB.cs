@@ -182,9 +182,11 @@ namespace Data_Layer
                 "VALUES (@raa_data, @samplerate_hz, @interval_sec, @interval_min, @data_format, @bin_eller_tekst, " +
                 "@maaleformat_type,@start_tid,@kommentar,@ekgmaaleid,@maalenehed_identifikation)";
             string insertStringDOEDBMaeling= "INSERT INTO EKGMAELING (dato,antalmaalinger,sfp_maaltagerfornavn,sfp_maltagerefternavn," +
-                "sfp_maaltagermedarbjnr,sfp_ansvrmedarbjnr, sfp_mt_org,sfp_mt_kommentar,borger_fornavn,borger_efternavn,borger_cprnr) " +
+                "sfp_maaltagermedarbjnr, sfp_mt_org,sfp_mt_kommentar,sfp_ansvfornavn,sfp_ansvefternavn,sfp_ansvrmedarbjnr,sfp_ans_org," +
+                "sfp_anskommentar,borger_fornavn,borger_efternavn,borger_beskrivelse,borger_cprnr) " +
                 "VALUES (@dato,@antalmaalinger,@sfp_maaltagerfornavn, @sfp_maltagerefternavn,@sfp_maaltagermedarbjnr,@sfp_ansvrmedarbjnr" +
-                "@sfp_mt_org,@sfp_mt_kommentar,@borger_fornavn,@borger_efternavn,@borger_cprnr)";
+                "@sfp_mt_org,@sfp_mt_kommentar, @sfp_ansvfornavn,@sfp_ansvefternavn,@sfp_ansvrmedarbjnr,@sfp_ans_org," +
+                "@sfp_anskommentar,@borger_fornavn,@borger_efternavn,@borger_beskrivelse,@borger_cprnr)";
             using (SqlCommand command = new SqlCommand(insertStringDOEDBData, connect))
             {
                 tal=nySTEMI._lokalECG.ToArray();
@@ -214,6 +216,11 @@ namespace Data_Layer
                 command.Parameters.AddWithValue("@sfp_maaltagermedarbjnr", nySTEMI._sfp_maaltagermedarbjdnr);
                 command.Parameters.AddWithValue("@sfp_mt_org", nySTEMI._sfp_mt_org);
                 command.Parameters.AddWithValue("@sfp_mt_kommentar", nySTEMI._sfp_mt_kommentar);
+                command.Parameters.AddWithValue("@sfp_ansvfornavn", "");
+                command.Parameters.AddWithValue("@sfp_ansvefternavn", "");
+                command.Parameters.AddWithValue("@sfp_ansvrmedarbjdnr", "");
+                command.Parameters.AddWithValue("@sfp_ans_org", "");
+                command.Parameters.AddWithValue("@sfp_anskommentar", "");
                 command.Parameters.AddWithValue("@borger_fornavn", nySTEMI._borger_fornavn);
                 command.Parameters.AddWithValue("@borger_efternavn", nySTEMI._borger_efternavn);
                 command.Parameters.AddWithValue("@borger_cprnr", nySTEMI._borger_cprnr);
