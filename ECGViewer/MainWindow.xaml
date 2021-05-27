@@ -148,7 +148,7 @@
         <Rectangle Fill="White" Margin="0,0,0.333,522.667"/>
         <Label Content="Elektronisk PatientJournal " Margin="303,41,0,0" FontSize="45" VerticalAlignment="Top" HorizontalAlignment="Left" Width="569" Height="66" FontWeight="Bold" FontFamily="Century Gothic" Foreground="#FFB20C1C"/>
         <Image Margin="43,10,0,0" Source="FDS.png" VerticalAlignment="Top" HorizontalAlignment="Left" Height="139" Width="120" OpacityMask="Black"/>
-        <Button x:Name="logout_BT" Cursor="Hand" Height="55" Width="154" FontSize="40" VerticalAlignment="Top" HorizontalAlignment="Left" Click="logout_BT_Click" ToolTip="Tryk for logud" BorderBrush="{x:Null}" Margin="997,45,0,0" Foreground="White">
+        <Button x:Name="logout_BT" Cursor="Hand" Height="62" Width="169" FontSize="40" VerticalAlignment="Top" HorizontalAlignment="Left" Click="logout_BT_Click" ToolTip="Tryk for logud" BorderBrush="{x:Null}" Margin="982,41,0,0" Foreground="White">
             <Button.Background>
                 <ImageBrush ImageSource="Skærmbillede 2021-05-27 125041.png"/>
             </Button.Background>
