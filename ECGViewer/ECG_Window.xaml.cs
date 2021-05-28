@@ -16,6 +16,10 @@ using LiveCharts.Wpf;
 using LiveCharts;
 using System.Data.SqlClient;
 using Logic_Layer;
+using Extreme.Statistics;
+using Extreme.DataAnalysis;
+using Extreme.Mathematics;
+
 
 
 namespace Presentation_Layer
@@ -31,8 +35,9 @@ namespace Presentation_Layer
         bool offentlig;
         public ChartValues<double> ecgCollection { get; set; }
         public ChartValues<double> Xvalues { get; set; }
+        double[] ekgarray = new double[500];
 
-        public ECG_Window(Logic logicRef, String SocSecNb, string måleID, bool offentlig)
+      public ECG_Window(Logic logicRef, String SocSecNb, string måleID, bool offentlig)
         {
             InitializeComponent();
             this.logicRef = logicRef;
@@ -45,26 +50,58 @@ namespace Presentation_Layer
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            ecgCollection.Clear();
             
-            if(offentlig == true)
+            ecgCollection.Clear();
+           
+         if (offentlig == true)
             {
-                foreach (var item in logicRef.ECGData(måleID))
-                {
-                    ecgCollection.Add(item.ECGVoltage);
+            double baseline = 0;
+            var histogram1 = Histogram.CreateEmpty(-1.8, 5.8, 76);
+            DTO.DTO_ECG[] dTO_array = new DTO.DTO_ECG[500];
+            dTO_array = logicRef.ECGData(måleID).ToArray();
 
-                }          
-                    STEMI_Button.IsEnabled = false;
-                    NOSTEMI_Button.IsEnabled = false;
+            for (int i = 0; i < dTO_array.Length; i++)
+            {
 
-               cpr_Lb.Content = SocSecNb;
+               ekgarray[i] = Convert.ToDouble(dTO_array[i].ECGVoltage);
+               histogram1.Increment(ekgarray[i]);
+            }
+
+            var max = histogram1.MaxIndex();
+            Interval<double> bin = histogram1.Bins[max];
+            baseline = bin.LowerBound + bin.Width / 2;
+            foreach (var item in logicRef.ECGData(måleID))
+                   { 
+                       ecgCollection.Add(item.ECGVoltage-baseline);
+
+                   }          
+                       STEMI_Button.IsEnabled = false;
+                       NOSTEMI_Button.IsEnabled = false;
+
+                  cpr_Lb.Content = SocSecNb;
             }
             else if(offentlig==false)
             {
-                foreach (var item in logicRef.GetLokalinfo()._lokalECG)
-                {
-                    ecgCollection.Add(item.ECGVoltage);
-                }
+            double baseline = 0;
+            var histogram1 = Histogram.CreateEmpty(-1.8, 5.8, 76);
+            DTO.DTO_ECG[] dTO_array = new DTO.DTO_ECG[500];
+            dTO_array = logicRef.GetLokalinfo()._lokalECG.ToArray();
+
+            for (int i = 0; i < dTO_array.Length; i++)
+            {
+
+               ekgarray[i] = Convert.ToDouble(dTO_array[i].ECGVoltage);
+               histogram1.Increment(ekgarray[i]);
+            }
+
+            var max = histogram1.MaxIndex();
+            Interval<double> bin = histogram1.Bins[max];
+            baseline = bin.LowerBound + bin.Width / 2;
+
+            foreach (var item in logicRef.GetLokalinfo()._lokalECG)
+                   {
+                       ecgCollection.Add(item.ECGVoltage-baseline);
+                   }
 
                 cpr_Lb.Content = logicRef.GetLokalinfo()._borger_cprnr;
                if (logicRef.GetLokalinfo()._STEMI_suspected == true)
