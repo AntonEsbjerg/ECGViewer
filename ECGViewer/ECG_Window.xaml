@@ -153,7 +153,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Border  BorderThickness="1" HorizontalAlignment="Left" Height="691" Margin="0,0,-6.667,-0.333" VerticalAlignment="Top" Width="1280" CornerRadius="20
+        <Border  BorderThickness="1" HorizontalAlignment="Left" Height="691" Margin="0,0,-3.333,-19" VerticalAlignment="Top" Width="1198" CornerRadius="20
                  " Background="#FFB5D7E6"/>
         <lvc:CartesianChart x:Name="ChartECG" Grid.Row="0" Margin="5,146,5.333,9.667" LegendLocation="Top" Background="White" FontSize="30" Style="{DynamicResource Rounded}">
             <lvc:CartesianChart.Series>
