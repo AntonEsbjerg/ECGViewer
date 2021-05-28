@@ -155,7 +155,7 @@
         </Grid.ColumnDefinitions>
         <Border  BorderThickness="1" Height="691" Margin="0,0,-3.333,-19" VerticalAlignment="Top" CornerRadius="20
                  " Background="#FFB5D7E6"/>
-        <lvc:CartesianChart x:Name="ChartECG" Grid.Row="0" Margin="5,146,5.333,9.667" LegendLocation="Top" Background="White" FontSize="30" Style="{DynamicResource Rounded}">
+        <lvc:CartesianChart x:Name="ChartECG" Grid.Row="0" Margin="5,146,4.667,10" LegendLocation="Top" Background="White" FontSize="30" Style="{DynamicResource Rounded}">
             <lvc:CartesianChart.Series>
                 <lvc:LineSeries x:Name="Bloodsugar_" Title="EKG-måling" Fill="Transparent" Values="{Binding ecgCollection}" LineSmoothness="0" PointGeometry="{x:Null}" />
             </lvc:CartesianChart.Series>
@@ -172,7 +172,7 @@
                 </lvc:Axis>
             </lvc:CartesianChart.AxisX>
             <lvc:CartesianChart.AxisY>
-                <lvc:Axis Title="Amplitude [mV]" FontSize="30" Foreground="Red"/>
+                <lvc:Axis Title="Amplitude [mV]" FontSize="14" Foreground="Red" MinValue="-2.5" MaxValue="2.5"/>
                 <lvc:Axis MinRange="1" Foreground="White" FontSize="0"/>
             </lvc:CartesianChart.AxisY>
         </lvc:CartesianChart>
