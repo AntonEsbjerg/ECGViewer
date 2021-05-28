@@ -46,26 +46,40 @@ namespace Presentation_Layer
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             ecgCollection.Clear();
-            cpr_Lb.Content = SocSecNb;
-            foreach (var item in logicRef.ECGData(måleID))
+            
+            if(offentlig == true)
             {
-                ecgCollection.Add(item.ECGVoltage);
+                foreach (var item in logicRef.ECGData(måleID))
+                {
+                    ecgCollection.Add(item.ECGVoltage);
+
+                }          
+                    STEMI_Button.IsEnabled = false;
+                    NOSTEMI_Button.IsEnabled = false;
+
+               cpr_Lb.Content = SocSecNb;
             }
-            if(offentlig==true)
+            else if(offentlig==false)
             {
-                STEMI_Button.IsEnabled = false;
-                NOSTEMI_Button.IsEnabled = false;
-            }
-            // listerne til x og y værdieren fyldes med data:
+                foreach (var item in logicRef.GetLokalinfo()._lokalECG)
+                {
+                    ecgCollection.Add(item.ECGVoltage);
+                }
 
-            //foreach (var dTO_BSugar in logicRef.getBSugarData(SocSecNb))
-            //{
-            //   Yvalues.Add();
-            //   Xvalues.Add();
+                cpr_Lb.Content = logicRef.GetLokalinfo()._borger_cprnr;
+               if (logicRef.GetLokalinfo()._STEMI_suspected == true)
+               {
+                  Analyse_label.Content = "STEMI mistænkt";
+               }
 
+               else if(logicRef.GetLokalinfo()._STEMI_suspected == false)
+               {
+                  Analyse_label.Content = "Ingen STEMI";
+               }
 
-            //DataContext = this;
-        }
+         }
+         
+      }
 
         private void home_button_Click1(object sender, RoutedEventArgs e)
         {

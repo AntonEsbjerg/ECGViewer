@@ -28,7 +28,7 @@ namespace Presentation_Layer
         private Logic logicObj;
         private ECG_Window ecgw;
         private string socsecNB;
-        private String måleID;
+        private string måleID;
        
         public MainWindow()
         {
@@ -38,7 +38,6 @@ namespace Presentation_Layer
             InitializeComponent();
             this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
         }
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             // et Logik objekt oprettes, loginW vises 
@@ -49,7 +48,6 @@ namespace Presentation_Layer
             if (LoginOK == true)
             {
                 this.Show();
-
             }
             if (LoginOK == false)
             {
@@ -59,6 +57,12 @@ namespace Presentation_Layer
             if (logicObj.GetLokalinfo()._doctor_att==true)
             {
                 Blinkingbutton(newECG_Button,1000,5);
+
+               if(logicObj.GetLokalinfo()._STEMI_suspected==true)
+               {
+                  Stemi_Alarm_Label.Content = "STEMI mistænkt";
+               }
+               
             }
             // comboboksen fyldes med målinger fra den offentlige EKG-database, de står i formattet "borgerCPR + måling nr: + måleID"
             foreach (var item in logicObj.ID())
@@ -91,7 +95,6 @@ namespace Presentation_Layer
             Storyboard.SetTargetProperty(opacityAnimation, new PropertyPath("Opacity"));
             storyboard.Begin(newECG_Button);
         }
-
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             //hvis programmet lukkes ved kommando kaldt i koden lukkes vinduet som normalt
@@ -104,7 +107,6 @@ namespace Presentation_Layer
             else
             {
                 e.Cancel = true;
-
                 var result = MessageBox.Show("Ønsker du at lukke programmet?", "Advarelse", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
 
                 if (result == MessageBoxResult.Yes)
@@ -113,12 +115,12 @@ namespace Presentation_Layer
                 }
             }
         }
-
         private void newECG_Button_Click(object sender, RoutedEventArgs e)
         {
+            måleID = Convert.ToString(logicObj.GetLokalinfo()._lokalID);
             // trykkes på knappen med nyt ecg undersøges det om der er en måling i den lokaledatabase som ikke er blevet set på fra hospitales side
             // hvis der er sådan en måling vises den i ECG_Window ellers vises en besked om at der ikke er nogen ny måling.
-            if(logicObj.GetLokalinfo()._ekgmaaleid!= 0)
+            if(logicObj.GetLokalinfo()._lokalID!= 0)
             {
                 ecgw = new ECG_Window(logicObj, socsecNB, måleID, false);
                 logicObj.GetLokalinfo()._doctor_att = true;
@@ -129,15 +131,17 @@ namespace Presentation_Layer
             else
             {
                 MessageBox.Show("Ingen ny ECG");
-            }
-            
+            }  
         }
-
         private void logout_BT_Click(object sender, RoutedEventArgs e)
         {
-            // Programmet forsøges lukket
+            // Programmet forsøges at logge ud af nuværende bruger og returnere til loginvinduet
+            this.Hide();
+            var mv = new MainWindow();
+            mv.Show();
+            LoginOK = false;
             this.Close();
-        }
+      }
         private void valgtEKG_BT_Click(object sender, RoutedEventArgs e)
         {
             // Eventhandler for tryk på knappen valgtEKG, ved tryk vises en ekg fra den offentlige EKG-database
@@ -153,11 +157,11 @@ namespace Presentation_Layer
                 ecgw.ShowDialog();
                 this.Show();
             }
+
             else 
             {
                 MessageBox.Show("Vælg venligst en ekg måling");
             }
         }
     }
-}
-
+}   

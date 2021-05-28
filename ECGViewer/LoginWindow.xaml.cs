@@ -22,14 +22,12 @@ namespace Presentation_Layer
     {
         private Logic logicRef;
         private MainWindow mainWRef;
-
         public LoginWindow(MainWindow mainWRef, Logic logicRef)
         {
             InitializeComponent();
             this.logicRef = logicRef;
             this.mainWRef = mainWRef;
             this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
-
         }
         private void HandleEsc(object sender, KeyEventArgs e)
         {
@@ -45,7 +43,6 @@ namespace Presentation_Layer
             logicRef = new Logic();
             if (logicRef.checkLogin(brugernavn_TB.Text, password_TB.Password) == true)
             {
-
                 mainWRef.LoginOK = true;
                 this.Close();
             }
@@ -55,54 +52,37 @@ namespace Presentation_Layer
                 brugernavn_TB.Clear();
                 password_TB.Clear();
                 brugernavn_TB.Focus();
-
             }
         }
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
             //cursoren sættes i brugernavn_tb til start
             brugernavn_TB.Focus();
-
             //gør således brugeren ikke kan skrive mere end cpr-nr. i brugernavntb
             brugernavn_TB.MaxLength = 11;
-
-
             capsLock_image.Visibility = Visibility.Hidden;
-
-
         }
-
         private void password_TB_KeyDown(object sender, KeyEventArgs e)
         {
-
             //loop der gør det muligt at trykke enter istedet for at trykkke på loginknap
-
             if (Keyboard.IsKeyDown(Key.Enter))
             {
                 login_Button_Click(this, new RoutedEventArgs());
             }
-
             //tjekker for capslock ved aktivitet inde i pazzword-tekstboxen
             capsLock_image.Visibility = ((Keyboard.GetKeyStates(Key.CapsLock) & KeyStates.Toggled) > 0) ? Visibility.Visible : Visibility.Hidden;
-
         }
-
 
         private void password_TB_GotFocus(object sender, RoutedEventArgs e)
         {
             //tjekker for capslock når man går ind i password-teksboxen
             capsLock_image.Visibility = ((Keyboard.GetKeyStates(Key.CapsLock) & KeyStates.Toggled) > 0) ? Visibility.Visible : Visibility.Hidden;
-
         }
-
         private void password_TB_LostFocus(object sender, RoutedEventArgs e)
         {
             //skjuler capslock-billedet når man går ud af password-teksboxen
             capsLock_image.Visibility = Visibility.Hidden;
         }
-
         private void LoginW_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             //hvis programmet lukkes ved kommando kaldt i koden lukkes vinduet som normalt
@@ -116,16 +96,13 @@ namespace Presentation_Layer
             else
             {
                 e.Cancel = true;
-
                 var result = MessageBox.Show("Ønsker du at lukke programmet?", "Advarelse", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
-
                 if (result == MessageBoxResult.Yes)
                 {
                     mainWRef.LoginOK = false;
                     e.Cancel = false;
                 }
             }
-
         }
     }
 }
