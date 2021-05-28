@@ -46,7 +46,7 @@ namespace Presentation_Layer
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             ecgCollection.Clear();
-            cpr_Lb.Content = SocSecNb;
+            
             if(offentlig == true)
             {
                 foreach (var item in logicRef.ECGData(måleID))
@@ -56,6 +56,8 @@ namespace Presentation_Layer
                 }          
                     STEMI_Button.IsEnabled = false;
                     NOSTEMI_Button.IsEnabled = false;
+
+               cpr_Lb.Content = SocSecNb;
             }
             else if(offentlig==false)
             {
@@ -63,8 +65,21 @@ namespace Presentation_Layer
                 {
                     ecgCollection.Add(item.ECGVoltage);
                 }
-            }
-        }
+
+                cpr_Lb.Content = logicRef.GetLokalinfo()._borger_cprnr;
+               if (logicRef.GetLokalinfo()._STEMI_suspected == true)
+               {
+                  Analyse_label.Content = "STEMI mistænkt";
+               }
+
+               else if(logicRef.GetLokalinfo()._STEMI_suspected == false)
+               {
+                  Analyse_label.Content = "Ingen STEMI";
+               }
+
+         }
+         
+      }
 
         private void home_button_Click1(object sender, RoutedEventArgs e)
         {

@@ -57,6 +57,12 @@ namespace Presentation_Layer
             if (logicObj.GetLokalinfo()._doctor_att==true)
             {
                 Blinkingbutton(newECG_Button,1000,5);
+
+               if(logicObj.GetLokalinfo()._STEMI_suspected==true)
+               {
+                  Stemi_Alarm_Label.Content = "STEMI mistænkt";
+               }
+               
             }
             // comboboksen fyldes med målinger fra den offentlige EKG-database, de står i formattet "borgerCPR + måling nr: + måleID"
             foreach (var item in logicObj.ID())
