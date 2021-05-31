@@ -29,13 +29,13 @@ namespace Presentation_Layer
     /// </summary>
     public partial class ECG_Window : Window
     {
-        Logic logicRef;
-        String SocSecNb;
-        string måleID;
-        bool offentlig;
+        private Logic logicRef;
+        private String SocSecNb;
+        private string måleID;
+        private bool offentlig;
         public ChartValues<double> ecgCollection { get; set; }
-        double[] ekgarray = new double[500];
-        const double SAMPLE_RATE = 50;
+        private double[] ekgarray;
+        private const double SAMPLE_RATE = 50;
         public Func<double, string> labelformatter { get; set; }
         public Func<double, string> labelformatter1 { get; set; }
         public SeriesCollection Maalingcollection { get; set; }
@@ -48,20 +48,19 @@ namespace Presentation_Layer
             this.SocSecNb = SocSecNb;
             this.måleID = måleID;
             this.offentlig = offentlig;
-         
             Maalingcollection = new SeriesCollection();
+            EKGMaaling.Values = new ChartValues<double> { };
             labelformatter = x => (x / SAMPLE_RATE).ToString();
             labelformatter1 = x => (x.ToString("F1"));
-            EKGMaaling.Title = "EKG-måling";
-            EKGMaaling.Values = new ChartValues<double> { };
-            Maalingcollection.Clear();
-            EKGMaaling.Values.Clear();
+            ekgarray = new double[500];
             DataContext = this;
 
       }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
+         EKGMaaling.Title = "EKG-måling";
+         Maalingcollection.Clear();
+         EKGMaaling.Values.Clear();
          ChartECG.AxisX[0].Separator.Step = 0.04 / (1/SAMPLE_RATE);
          ChartECG.AxisX[1].Separator.Step = 0.2 /(1/SAMPLE_RATE);
          ChartECG.AxisY[0].Separator.Step = 0.1;
