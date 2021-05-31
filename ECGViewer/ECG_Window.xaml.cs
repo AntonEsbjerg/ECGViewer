@@ -34,27 +34,43 @@ namespace Presentation_Layer
         string måleID;
         bool offentlig;
         public ChartValues<double> ecgCollection { get; set; }
-        public ChartValues<double> Xvalues { get; set; }
         double[] ekgarray = new double[500];
-
+        const double SAMPLE_RATE = 50;
+        public Func<double, string> labelformatter { get; set; }
+        public Func<double, string> labelformatter1 { get; set; }
+        public SeriesCollection Maalingcollection { get; set; }
+        public LineSeries EKGMaaling { get; set; }
       public ECG_Window(Logic logicRef, String SocSecNb, string måleID, bool offentlig)
         {
             InitializeComponent();
+            EKGMaaling = new LineSeries();
             this.logicRef = logicRef;
             this.SocSecNb = SocSecNb;
             this.måleID = måleID;
             this.offentlig = offentlig;
+         
+            Maalingcollection = new SeriesCollection();
+            labelformatter = x => (x / SAMPLE_RATE).ToString();
+            labelformatter1 = x => (x.ToString("F1"));
+            EKGMaaling.Title = "EKG-måling";
+            EKGMaaling.Values = new ChartValues<double> { };
+            Maalingcollection.Clear();
+            EKGMaaling.Values.Clear();
             DataContext = this;
-            ecgCollection = new ChartValues<double>();
-            Xvalues = new ChartValues<double>();
-        }
+
+      }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            
-            ecgCollection.Clear();
-           
+
+         ChartECG.AxisX[0].Separator.Step = 0.04 / (1/SAMPLE_RATE);
+         ChartECG.AxisX[1].Separator.Step = 0.2 /(1/SAMPLE_RATE);
+         ChartECG.AxisY[0].Separator.Step = 0.1;
+         ChartECG.AxisY[1].Separator.Step = 0.5;
+         EKGMaaling.Fill = System.Windows.Media.Brushes.Transparent;
+         EKGMaaling.PointGeometry = null;
+
          if (offentlig == true)
-            {
+         {
             double baseline = 0;
             var histogram1 = Histogram.CreateEmpty(-1.8, 5.8, 76);
             DTO.DTO_ECG[] dTO_array = new DTO.DTO_ECG[500];
@@ -70,22 +86,23 @@ namespace Presentation_Layer
             var max = histogram1.MaxIndex();
             Interval<double> bin = histogram1.Bins[max];
             baseline = bin.LowerBound + bin.Width / 2;
-            foreach (var item in logicRef.ECGData(måleID))
-                   { 
-                       ecgCollection.Add(item.ECGVoltage-baseline);
 
-                   }          
-                       STEMI_Button.IsEnabled = false;
-                       NOSTEMI_Button.IsEnabled = false;
-
-                  cpr_Lb.Content = SocSecNb;
-            }
-            else if(offentlig==false)
+            for (int i = 0; i < ekgarray.Length; i++)
             {
+               EKGMaaling.Values.Add(ekgarray[i] - baseline);
+            }
+
+            STEMI_Button.IsEnabled = false;
+            NOSTEMI_Button.IsEnabled = false;
+            cpr_Lb.Content = SocSecNb;
+         }
+         else if (offentlig == false)
+         {
             double baseline = 0;
             var histogram1 = Histogram.CreateEmpty(-1.8, 5.8, 76);
             DTO.DTO_ECG[] dTO_array = new DTO.DTO_ECG[500];
             dTO_array = logicRef.GetLokalinfo()._lokalECG.ToArray();
+            cpr_Lb.Content = logicRef.GetLokalinfo()._borger_cprnr;
 
             for (int i = 0; i < dTO_array.Length; i++)
             {
@@ -98,27 +115,28 @@ namespace Presentation_Layer
             Interval<double> bin = histogram1.Bins[max];
             baseline = bin.LowerBound + bin.Width / 2;
 
-            foreach (var item in logicRef.GetLokalinfo()._lokalECG)
-                   {
-                       ecgCollection.Add(item.ECGVoltage-baseline);
-                   }
+            for (int i = 0; i < ekgarray.Length; i++)
+            {
+               EKGMaaling.Values.Add(ekgarray[i] - baseline);
+            }
 
-                cpr_Lb.Content = logicRef.GetLokalinfo()._borger_cprnr;
-               if (logicRef.GetLokalinfo()._STEMI_suspected == true)
-               {
-                  Analyse_label.Content = "STEMI mistænkt";
-               }
+            if (logicRef.GetLokalinfo()._STEMI_suspected == true)
+            {
+               Analyse_label.Content = "STEMI mistænkt";
+            }
 
-               else if(logicRef.GetLokalinfo()._STEMI_suspected == false)
-               {
-                  Analyse_label.Content = "Ingen STEMI";
-               }
+            else if (logicRef.GetLokalinfo()._STEMI_suspected == false)
+            {
+               Analyse_label.Content = "Ingen STEMI";
+            }
 
          }
-         
+
+         Maalingcollection.Add(EKGMaaling);
+
       }
 
-        private void home_button_Click1(object sender, RoutedEventArgs e)
+      private void home_button_Click1(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
