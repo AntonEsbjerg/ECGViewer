@@ -130,7 +130,7 @@ namespace Presentation_Layer
             }
             else
             {
-                MessageBox.Show("Ingen ny ECG");
+                MessageBox.Show("Ingen ny EKG", "Information", MessageBoxButton.OK,MessageBoxImage.Information);
             }  
         }
         private void logout_BT_Click(object sender, RoutedEventArgs e)

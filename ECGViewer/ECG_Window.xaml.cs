@@ -30,28 +30,27 @@ namespace Presentation_Layer
     public partial class ECG_Window : Window
     {
         private Logic logicRef;
-        private String SocSecNb;
+        private string socSecNb;
         private string måleID;
         private bool offentlig;
-        public ChartValues<double> ecgCollection { get; set; }
         private double[] ekgarray;
         private const double SAMPLE_RATE = 50;
-        public Func<double, string> labelformatter { get; set; }
-        public Func<double, string> labelformatter1 { get; set; }
+        public Func<double, string> Labelformatter { get; set; }
+        public Func<double, string> Labelformatter1 { get; set; }
         public SeriesCollection Maalingcollection { get; set; }
         public LineSeries EKGMaaling { get; set; }
-      public ECG_Window(Logic logicRef, String SocSecNb, string måleID, bool offentlig)
+      public ECG_Window(Logic logicRef, string socSecNb, string måleID, bool offentlig)
         {
             InitializeComponent();
             EKGMaaling = new LineSeries();
             this.logicRef = logicRef;
-            this.SocSecNb = SocSecNb;
+            this.socSecNb = socSecNb;
             this.måleID = måleID;
             this.offentlig = offentlig;
             Maalingcollection = new SeriesCollection();
             EKGMaaling.Values = new ChartValues<double> { };
-            labelformatter = x => (x / SAMPLE_RATE).ToString();
-            labelformatter1 = x => (x.ToString("F1"));
+            Labelformatter = x => (x / SAMPLE_RATE).ToString();
+            Labelformatter1 = x => (x.ToString("F1"));
             ekgarray = new double[500];
             DataContext = this;
 
@@ -93,7 +92,7 @@ namespace Presentation_Layer
 
             STEMI_Button.IsEnabled = false;
             NOSTEMI_Button.IsEnabled = false;
-            cpr_Lb.Content = SocSecNb;
+            cpr_Lb.Content = socSecNb;
          }
          else if (offentlig == false)
          {

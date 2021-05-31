@@ -189,7 +189,6 @@ namespace Data_Layer
                 "@sfp_anskommentar,@borger_fornavn,@borger_efternavn,@borger_beskrivelse,@borger_cprnr)";
             using (SqlCommand command = new SqlCommand(insertStringDOEDBMaeling, connect))
             {
-                int id;
                 command.Parameters.AddWithValue("@dato", nySTEMI._dato);
                 command.Parameters.AddWithValue("@antalmaalinger", nySTEMI._antalmaalinger);
                 command.Parameters.AddWithValue("@sfp_maaltagerfornavn", nySTEMI._sfp_maaltagerfornavn);
