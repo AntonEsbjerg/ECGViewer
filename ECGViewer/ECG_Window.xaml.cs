@@ -29,39 +29,37 @@ namespace Presentation_Layer
     /// </summary>
     public partial class ECG_Window : Window
     {
-        Logic logicRef;
-        String SocSecNb;
-        string måleID;
-        bool offentlig;
-        public ChartValues<double> ecgCollection { get; set; }
-        double[] ekgarray = new double[500];
-        const double SAMPLE_RATE = 50;
-        public Func<double, string> labelformatter { get; set; }
-        public Func<double, string> labelformatter1 { get; set; }
+        private Logic logicRef;
+        private string socSecNb;
+        private string måleID;
+        private bool offentlig;
+        private double[] ekgarray;
+        private const double SAMPLE_RATE = 50;
+        public Func<double, string> Labelformatter { get; set; }
+        public Func<double, string> Labelformatter1 { get; set; }
         public SeriesCollection Maalingcollection { get; set; }
         public LineSeries EKGMaaling { get; set; }
-      public ECG_Window(Logic logicRef, String SocSecNb, string måleID, bool offentlig)
+      public ECG_Window(Logic logicRef, string socSecNb, string måleID, bool offentlig)
         {
             InitializeComponent();
             EKGMaaling = new LineSeries();
             this.logicRef = logicRef;
-            this.SocSecNb = SocSecNb;
+            this.socSecNb = socSecNb;
             this.måleID = måleID;
             this.offentlig = offentlig;
-         
             Maalingcollection = new SeriesCollection();
-            labelformatter = x => (x / SAMPLE_RATE).ToString();
-            labelformatter1 = x => (x.ToString("F1"));
-            EKGMaaling.Title = "EKG-måling";
             EKGMaaling.Values = new ChartValues<double> { };
-            Maalingcollection.Clear();
-            EKGMaaling.Values.Clear();
+            Labelformatter = x => (x / SAMPLE_RATE).ToString();
+            Labelformatter1 = x => (x.ToString("F1"));
+            ekgarray = new double[500];
             DataContext = this;
 
       }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
+         EKGMaaling.Title = "EKG-måling";
+         Maalingcollection.Clear();
+         EKGMaaling.Values.Clear();
          ChartECG.AxisX[0].Separator.Step = 0.04 / (1/SAMPLE_RATE);
          ChartECG.AxisX[1].Separator.Step = 0.2 /(1/SAMPLE_RATE);
          ChartECG.AxisY[0].Separator.Step = 0.1;
@@ -94,7 +92,7 @@ namespace Presentation_Layer
 
             STEMI_Button.IsEnabled = false;
             NOSTEMI_Button.IsEnabled = false;
-            cpr_Lb.Content = SocSecNb;
+            cpr_Lb.Content = socSecNb;
          }
          else if (offentlig == false)
          {

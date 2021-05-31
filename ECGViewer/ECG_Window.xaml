@@ -162,7 +162,7 @@
                         <lvc:Separator StrokeThickness="1" IsHitTestVisible="False" Stroke="#FFC5C2C2" />
                     </lvc:Axis.Separator>
                 </lvc:Axis>
-                <lvc:Axis ShowLabels="True" LabelFormatter="{Binding labelformatter}" MaxValue="500">
+                <lvc:Axis ShowLabels="True" LabelFormatter="{Binding Labelformatter}" MaxValue="500">
                     <lvc:Axis.Separator>
                         <lvc:Separator  Stroke="#FF9C9898" StrokeThickness="2" IsHitTestVisible="False"/>
                     </lvc:Axis.Separator>
@@ -170,12 +170,12 @@
             </lvc:CartesianChart.AxisX>
             
             <lvc:CartesianChart.AxisY>
-                <lvc:Axis Title="Amplitude [mV]" Foreground="Red" ShowLabels="True" LabelFormatter="{Binding labelformatter1}" MinValue="-1" MaxValue="1.5">
+                <lvc:Axis Title="Amplitude [mV]" Foreground="Red" ShowLabels="True" LabelFormatter="{Binding Labelformatter1}" MinValue="-1" MaxValue="2.5">
                     <lvc:Axis.Separator>
                         <lvc:Separator Stroke="#FFC5C2C2" IsEnabled="True" StrokeThickness="1"></lvc:Separator>
                     </lvc:Axis.Separator>
                 </lvc:Axis>
-                <lvc:Axis ShowLabels="true" MinValue="-1" MaxValue="1.5" Labels="">
+                <lvc:Axis ShowLabels="true" MinValue="-1" MaxValue="2.5" Labels="">
                     <lvc:Axis.Separator>
                         <lvc:Separator Stroke="#FF9C9898" IsEnabled="True" StrokeThickness="2"></lvc:Separator>
                     </lvc:Axis.Separator>

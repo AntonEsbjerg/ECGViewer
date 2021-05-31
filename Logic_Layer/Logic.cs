@@ -16,10 +16,17 @@ namespace Logic_Layer
         
         public bool checkLogin(String username, String pw)
         {
+            bool result;
             if (dataObject.isUserRegistered(username, pw) == true)
-                return true;
+            {
+                result = true;
+                return result;
+            }
             else
-                return false;
+            {
+                result = false;
+                return result;
+            }
         }
         public List<DTO_id> ID()
         {
