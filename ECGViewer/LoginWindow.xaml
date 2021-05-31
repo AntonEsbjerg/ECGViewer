@@ -160,7 +160,7 @@
                 <StackPanel>
                     <TextBlock FontWeight="Bold" FontSize="14" Margin="0,0,0,5"><Run Text="Hjælp til adgangskode"/></TextBlock>
                     <TextBlock><Run Text="Din adgangskode består af"/><LineBreak /><Run Text="en 4-cifret kode."/></TextBlock>
-                    <Border BorderBrush="Silver" BorderThickness="5" />
+                    <Border BorderBrush="Silver" BorderThickness="0,1,0,0" Margin="0,8" />
                     <WrapPanel>
                         <Image Margin="0,0,5,0" Source="/help_icon.png"/>
                         <TextBlock FontStyle="Italic"><Run Text="Ved glemt adgangskode kontakt IT"/></TextBlock>
