@@ -153,30 +153,36 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Border  BorderThickness="1" HorizontalAlignment="Left" Height="691" Margin="0,0,-6.667,-0.333" VerticalAlignment="Top" Width="1280" CornerRadius="20
+        <Border  BorderThickness="1" Height="691" Margin="0,0,-3.333,-19" VerticalAlignment="Top" CornerRadius="20
                  " Background="#FFB5D7E6"/>
-        <lvc:CartesianChart x:Name="ChartECG" Grid.Row="0" Margin="5,146,5.333,9.667" LegendLocation="Top" Background="White" FontSize="30" Style="{DynamicResource Rounded}">
-            <lvc:CartesianChart.Series>
-                <lvc:LineSeries x:Name="Bloodsugar_" Title="EKG-måling" Fill="Transparent" Values="{Binding ecgCollection}" LineSmoothness="0"/>
-            </lvc:CartesianChart.Series>
+        <lvc:CartesianChart x:Name="ChartECG" Grid.Row="0" Margin="5,146,4.667,10" Series="{Binding Maalingcollection}" LegendLocation="Top" Background="White" FontSize="30" Style="{DynamicResource Rounded}">
             <lvc:CartesianChart.AxisX>
-                <lvc:Axis Title="Tid [20 mS]" FontSize="30" LabelsRotation="-45">
+                <lvc:Axis Title="Tid [mS]" ShowLabels="True" Labels="" MaxValue="500" MinValue="0">
                     <lvc:Axis.Separator>
-                        <lvc:Separator IsEnabled="True" Step="1" Stroke="#FF6C6969" />
+                        <lvc:Separator StrokeThickness="1" IsHitTestVisible="False" Stroke="#FFC5C2C2" />
                     </lvc:Axis.Separator>
                 </lvc:Axis>
-                <lvc:Axis MaxValue="500">
+                <lvc:Axis ShowLabels="True" LabelFormatter="{Binding labelformatter}" MaxValue="500">
                     <lvc:Axis.Separator>
-                        <lvc:Separator IsEnabled="True" Step="1" Stroke="#FFB4B4B4" />
+                        <lvc:Separator  Stroke="#FF9C9898" StrokeThickness="2" IsHitTestVisible="False"/>
                     </lvc:Axis.Separator>
                 </lvc:Axis>
             </lvc:CartesianChart.AxisX>
+            
             <lvc:CartesianChart.AxisY>
-                <lvc:Axis Title="Amplitude [mV]" FontSize="30" Foreground="Red"/>
-                <lvc:Axis MinValue="-5" MaxValue="15" MinRange="1" Foreground="White" FontSize="0"/>
+                <lvc:Axis Title="Amplitude [mV]" Foreground="Red" ShowLabels="True" LabelFormatter="{Binding labelformatter1}" MinValue="-1" MaxValue="2.5">
+                    <lvc:Axis.Separator>
+                        <lvc:Separator Stroke="#FFC5C2C2" IsEnabled="True" StrokeThickness="1"></lvc:Separator>
+                    </lvc:Axis.Separator>
+                </lvc:Axis>
+                <lvc:Axis ShowLabels="true" MinValue="-1" MaxValue="2.5" Labels="">
+                    <lvc:Axis.Separator>
+                        <lvc:Separator Stroke="#FF9C9898" IsEnabled="True" StrokeThickness="2"></lvc:Separator>
+                    </lvc:Axis.Separator>
+                </lvc:Axis>
             </lvc:CartesianChart.AxisY>
         </lvc:CartesianChart>
-        <Label Content="CPR:" HorizontalAlignment="Left" Margin="48,44,0,0" VerticalAlignment="Top" FontWeight="Bold" Height="62" Width="89" FontSize="30"/>
+        <Label Content="CPR:" HorizontalAlignment="Left" Margin="27,20,0,0" VerticalAlignment="Top" FontWeight="Bold" Height="43" Width="76" FontSize="25"/>
         <Button x:Name="home_button" Cursor="Hand" Margin="1123,44,0,0" BorderBrush="{x:Null}" Click="home_button_Click1" Height="62" VerticalAlignment="Top" ToolTip="Tilbage til hovedmenu" Foreground="{x:Null}" Style="{DynamicResource ButtonStyle2}" HorizontalAlignment="Left" Width="62">
             <Button.Background>
                 <ImageBrush ImageSource=",kj.PNG"/>
@@ -184,9 +190,11 @@
         </Button>
         <Label Content="Hovedmenu:" Margin="952,50,0,0" FontSize="25" FontWeight="Bold" HorizontalAlignment="Left" Width="163" Height="74" VerticalAlignment="Top"/>
 
-        <Button x:Name="STEMI_Button" Content="STEMI diagnose" Cursor="Hand" HorizontalAlignment="Left" Margin="418,36,0,0" VerticalAlignment="Top" Width="209" Height="70" FontSize="25" FontWeight="Bold" Background="#FFED1D1D" Click="STEMI_Button_Click" Style="{DynamicResource Round}" BorderBrush="{x:Null}"/>
-        <Button x:Name="NOSTEMI_Button" Content="INGEN STEMI" Cursor="Hand" HorizontalAlignment="Left" Margin="671,37,0,0" VerticalAlignment="Top" Width="209" Height="70" Background="#FF71D087" FontWeight="Bold" FontSize="25" Click="NOSTEMI_Button_Click" Style="{DynamicResource ButtonStyle1}" BorderBrush="{x:Null}"/>
-        <Label x:Name="cpr_Lb" HorizontalAlignment="Left" Margin="142,36,0,0" VerticalAlignment="Top" FontSize="30" Width="211" Height="70"/>
+        <Button x:Name="STEMI_Button" Content="STEMI diagnose" Cursor="Hand" HorizontalAlignment="Left" Margin="470,36,0,0" VerticalAlignment="Top" Width="209" Height="70" FontSize="25" FontWeight="Bold" Background="#FFED1D1D" Click="STEMI_Button_Click" Style="{DynamicResource Round}" BorderBrush="{x:Null}"/>
+        <Button x:Name="NOSTEMI_Button" Content="INGEN STEMI" Cursor="Hand" HorizontalAlignment="Left" Margin="703,37,0,0" VerticalAlignment="Top" Width="209" Height="70" Background="#FF71D087" FontWeight="Bold" FontSize="25" Click="NOSTEMI_Button_Click" Style="{DynamicResource ButtonStyle1}" BorderBrush="{x:Null}"/>
+        <Label x:Name="cpr_Lb" HorizontalAlignment="Left" Margin="229,20,0,0" VerticalAlignment="Top" FontSize="25" Width="222" Height="43" Content=""/>
+        <Label Content="Systemanalyse:" HorizontalAlignment="Left" Margin="27,84,0,0" VerticalAlignment="Top" FontWeight="Bold" Height="62" Width="192" FontSize="25"/>
+        <Label x:Name="Analyse_label" HorizontalAlignment="Left" Margin="229,84,0,0" VerticalAlignment="Top" FontSize="25" Width="222" Height="43" Content=""/>
 
     </Grid>
 </Window>
