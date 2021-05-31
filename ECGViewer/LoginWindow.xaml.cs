@@ -38,9 +38,9 @@ namespace Presentation_Layer
         }
         private void login_Button_Click(object sender, RoutedEventArgs e)
         {
-            //sætter eventhandler til login knappen, således at hvis login er gyligt så sættes loginok til true, loginviduet lukkes og hovedmenuen åbner
-            //hvis ikke login er gyldigt kommer en messagebox frem og textboksene nulstilles + cursor sættes i brugernavn_tb
-
+         //sætter eventhandler til login knappen, således at hvis login er gyligt så sættes loginok til true, loginviduet lukkes og hovedmenuen åbner
+         //hvis ikke login er gyldigt kommer en messagebox frem og textboksene nulstilles + cursor sættes i brugernavn_tb
+            logicRef = new Logic();
             if (logicRef.checkLogin(brugernavn_TB.Text, password_TB.Password) == true)
             {
                 mainWRef.LoginOK = true;
