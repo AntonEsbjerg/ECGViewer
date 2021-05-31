@@ -7,7 +7,7 @@ namespace Data_Layer
 {
     public interface IData
     {
-        bool isUserRegistered(String socSecNb, String pw);
+        bool isUserRegistered(String username, String pw);
         List<DTO_ECG> getECGData(String måleID);
         List<DTO_id> fillComboBox();
         DTO_lokalinfo downloadLokalinfo();
